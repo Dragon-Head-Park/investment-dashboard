@@ -401,7 +401,7 @@
 
   <!-- ============ OVERVIEW TAB ============ -->
   <div id="tab-overview" class="tab-content active">
-    <div class="section-ts"><span class="ts-dot"></span> 시장지수·포트폴리오: <span id="ts-overview">2026.03.23 15:30</span> | 이벤트 타임라인: <span id="ts-timeline">2026.03.23 (3/23 한국 장마감 + 3/20 미국 장마감 반영)</span></div>
+    <div class="section-ts"><span class="ts-dot"></span> 시장지수·포트폴리오: <span id="ts-overview">2026.03.23 15:30</span> | 이벤트 타임라인: <span id="ts-timeline">2026.03.23 (3/23 한국 장마감 확정 + 3/23 건설지출 결과 반영)</span></div>
     <!-- Market indices -->
     <div class="grid-6" id="indexCards">
       <!-- Filled by JS -->
@@ -7535,7 +7535,7 @@ function closeInsightModal() {
     // ============================================================
     // 스케줄 태스크가 실행될 때마다 이 변수에 기록을 추가합니다.
     // 각 entry: { taskId, label, time (ISO), tab, updates: [{ section, label, items: [string] }] }
-    var __updateLog = [{"taskId":"us-market-dashboard-update","time":"2026-03-23T17:41:45","updates":[{"tab":"stocks","label":"종목 데이터","items":["3월 주가 추이","3월 주가 추이","📊 종합 투자 분석 — 정량 + 정성 + 산업/기술 스코어카드"],"sectionId":"sub-portfolio"}]},{"taskId":"stock-analysis-us-close","time":"2026-03-23T17:41:45","updates":[{"tab":"stocks","label":"정량·정성 분석","items":["3월 주가 추이","3월 주가 추이","📊 종합 투자 분석 — 정량 + 정성 + 산업/기술 스코어카드"],"sectionId":"sub-analysis"}]},{"taskId":"ceo-tracker-us-close","time":"2026-03-23T17:41:45","updates":[{"tab":"stocks","label":"CEO 트래커","items":["Elon Musk","Alex Karp","Andy Jassy","JoeBen Bevirt","Jayshree Ullal","HD현대일렉트릭 경영진"],"sectionId":"sub-ceotracker"}]},{"taskId":"macro-kr-close-update","time":"2026-03-23T17:41:45","updates":[{"tab":"macro","label":"거시경제","items":["채권/금리","원자재","경제지표"]}]},{"taskId":"hotissue-us-close","time":"2026-03-23T17:41:45","updates":[{"tab":"hotissue","label":"핫이슈","items":["🏦 미국 사모펀드(Private Credit) 환매 위기","🛢️ 호르무즈 해협 봉쇄 & 유가 위기","🤖 AI 버블 우려 & 빅테크 밸류에이션","🏛️ 미국 관세 정책 & 무역 갈등"]}]}];
+    var __updateLog = [{"taskId":"us-market-dashboard-update","time":"2026-03-23T17:41:45","updates":[{"tab":"stocks","label":"종목 데이터","items":["3월 주가 추이","3월 주가 추이","📊 종합 투자 분석 — 정량 + 정성 + 산업/기술 스코어카드"],"sectionId":"sub-portfolio"}]},{"taskId":"stock-analysis-us-close","time":"2026-03-23T17:41:45","updates":[{"tab":"stocks","label":"정량·정성 분석","items":["3월 주가 추이","3월 주가 추이","📊 종합 투자 분석 — 정량 + 정성 + 산업/기술 스코어카드"],"sectionId":"sub-analysis"}]},{"taskId":"ceo-tracker-us-close","time":"2026-03-23T17:41:45","updates":[{"tab":"stocks","label":"CEO 트래커","items":["Elon Musk","Alex Karp","Andy Jassy","JoeBen Bevirt","Jayshree Ullal","HD현대일렉트릭 경영진"],"sectionId":"sub-ceotracker"}]},{"taskId":"macro-kr-close-update","time":"2026-03-23T17:41:45","updates":[{"tab":"macro","label":"거시경제","items":["채권/금리","원자재","경제지표"]}]},{"taskId":"hotissue-us-close","time":"2026-03-23T17:41:45","updates":[{"tab":"hotissue","label":"핫이슈","items":["🏦 미국 사모펀드(Private Credit) 환매 위기","🛢️ 호르무즈 해협 봉쇄 & 유가 위기","🤖 AI 버블 우려 & 빅테크 밸류에이션","🏛️ 미국 관세 정책 & 무역 갈등"]}]},{"taskId":"timeline-kr-close","time":"2026-03-23T15:45:00","updates":[{"tab":"overview","label":"이벤트 타임라인","items":["3/23 KOSPI 최종 종가 5,435.71(-5.69%) 확정 반영 (기존 5,580대 마감 수정)","3/23 삼성전자 ₩186,300(-6.57%)·POSCO홀딩스 ₩325,000·한화에어로스페이스 ₩1,280,000 종가 추가","3/23 미국 2월 건설지출 발표 결과 반영 (주거용 YoY -26.3%, 비주거용 $494억)","3/21 중국 NPC 5개년계획 ⏳→✅ 확정 업데이트","타임스탬프 갱신: 3/23 한국 장마감 확정 + 건설지출 결과 반영"]}]}];
     // 탭 ID → 한글 라벨 매핑
     var __tabLabels = {
       overview: '📊 종합 개요', stocks: '📈 개별종목', macro: '🌐 거시경제',
