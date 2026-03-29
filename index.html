@@ -695,6 +695,9 @@
         <div class="card"><h3>분기별 매출 성장</h3><div class="chart-wrap-sm"><canvas id="pltrRevChart"></canvas></div></div>
       </div>
     </div>
+    <!-- 사용자 추가 주력투자 (동적 렌더링) -->
+    <div id="user-portfolio-container"></div>
+
     </div><!-- end sub-portfolio -->
 
     <div id="sub-watchlist" class="sub-content">
@@ -799,6 +802,9 @@
         <div class="analysis-box"><h4>📋 기업</h4><p>키움 목표가 75만→<span class="good-text">106만원</span>, 한투 87만→<span class="good-text">110만원</span> 상향. 2026 매출 4.35조, 수주 $42.2억 가이던스. 최대주주 지분 소폭 변동(-270주) 외 특이사항 없음.</p></div>
       </div>
     </div>
+    <!-- 사용자 추가 관심종목 (동적 렌더링) -->
+    <div id="user-watchlist-container"></div>
+
     </div><!-- end sub-watchlist -->
 
     <div id="sub-analysis" class="sub-content">
@@ -5918,7 +5924,7 @@ let allStocks = [...portfolioStocks, ...watchlistStocks];
           changed = true;
         }
       });
-      if (changed) renderStockList();
+      if (changed) { renderStockList(); renderAllUserStocks(); }
     })
     .catch(() => { /* 네트워크 오류 시 기본 종목만 표시 */ });
 })();
@@ -5993,6 +5999,106 @@ function renderStockList() {
   });
 }
 
+// ============ 사용자 추가 관심종목을 관심종목 탭에 동적 렌더링 ============
+const builtInWatchlistTickers = ['AMZN','JOBY','ANET','267260']; // 하드코딩된 기본 종목
+
+function renderUserWatchlist() {
+  const container = document.getElementById('user-watchlist-container');
+  if (!container) return;
+
+  // allStocks에서 watchlist 타입이면서 기본 종목이 아닌 것만 필터
+  const userWatchlist = allStocks.filter(s => s.type === 'watchlist' && !builtInWatchlistTickers.includes(s.ticker));
+
+  if (userWatchlist.length === 0) {
+    container.innerHTML = '';
+    return;
+  }
+
+  let html = '<div style="margin-top:20px;padding-top:16px;border-top:2px solid rgba(96,165,250,0.15)">';
+  html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px"><span style="font-size:14px;font-weight:700;color:var(--blue)">➕ 내가 추가한 관심종목</span><span style="font-size:11px;padding:2px 8px;border-radius:10px;background:rgba(96,165,250,0.1);color:var(--blue)">' + userWatchlist.length + '종목</span></div>';
+
+  userWatchlist.forEach(s => {
+    const cur = s.currency === '₩' ? '₩' : '$';
+    const priceStr = s.currency === '₩' ? `₩${Number(s.price).toLocaleString()}` : `$${s.price}`;
+    const changeClass = s.change >= 0 ? 'up' : 'down';
+    const changeSign = s.change >= 0 ? '+' : '';
+
+    html += `
+    <div class="stock-detail" style="margin-bottom:12px">
+      <div class="stock-header" style="cursor:pointer" onclick="showStockDetailModal('${s.ticker}')">
+        <div class="stock-title">
+          <h2>${s.emoji || '📊'} ${s.name}</h2>
+          <span class="ticker">${s.ticker}</span>
+          <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(96,165,250,0.1);color:var(--blue);margin-left:6px">☁️ 동기화</span>
+        </div>
+        <div class="stock-price">
+          <div class="price">${priceStr}</div>
+          ${s.change ? `<div class="pchange ${changeClass}">${changeSign}${s.change}%</div>` : ''}
+        </div>
+      </div>
+      ${s.memo ? `<div style="padding:8px 16px;font-size:12px;color:var(--text-dim)">📝 ${s.memo}</div>` : ''}
+      <div style="padding:8px 16px 12px;text-align:right">
+        <button onclick="event.stopPropagation();removeStock('${s.ticker}');renderUserWatchlist()" style="font-size:11px;padding:4px 12px;border-radius:6px;background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,0.2);cursor:pointer">삭제</button>
+      </div>
+    </div>`;
+  });
+
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+// 포트폴리오 탭에도 동일하게 적용
+const builtInPortfolioTickers = ['TSLA','PLTR'];
+
+function renderUserPortfolio() {
+  const container = document.getElementById('user-portfolio-container');
+  if (!container) return;
+
+  const userPortfolio = allStocks.filter(s => s.type === 'portfolio' && !builtInPortfolioTickers.includes(s.ticker));
+
+  if (userPortfolio.length === 0) {
+    container.innerHTML = '';
+    return;
+  }
+
+  let html = '<div style="margin-top:20px;padding-top:16px;border-top:2px solid rgba(239,68,68,0.15)">';
+  html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px"><span style="font-size:14px;font-weight:700;color:var(--red)">➕ 내가 추가한 주력 투자</span><span style="font-size:11px;padding:2px 8px;border-radius:10px;background:rgba(239,68,68,0.1);color:var(--red)">' + userPortfolio.length + '종목</span></div>';
+
+  userPortfolio.forEach(s => {
+    const priceStr = s.currency === '₩' ? `₩${Number(s.price).toLocaleString()}` : `$${s.price}`;
+    const changeClass = s.change >= 0 ? 'up' : 'down';
+    const changeSign = s.change >= 0 ? '+' : '';
+
+    html += `
+    <div class="stock-detail" style="margin-bottom:12px">
+      <div class="stock-header" style="cursor:pointer" onclick="showStockDetailModal('${s.ticker}')">
+        <div class="stock-title">
+          <h2>${s.emoji || '📊'} ${s.name}</h2>
+          <span class="ticker">${s.ticker}</span>
+          <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(96,165,250,0.1);color:var(--blue);margin-left:6px">☁️ 동기화</span>
+        </div>
+        <div class="stock-price">
+          <div class="price">${priceStr}</div>
+          ${s.change ? `<div class="pchange ${changeClass}">${changeSign}${s.change}%</div>` : ''}
+        </div>
+      </div>
+      ${s.memo ? `<div style="padding:8px 16px;font-size:12px;color:var(--text-dim)">📝 ${s.memo}</div>` : ''}
+      <div style="padding:8px 16px 12px;text-align:right">
+        <button onclick="event.stopPropagation();removeStock('${s.ticker}');renderUserPortfolio()" style="font-size:11px;padding:4px 12px;border-radius:6px;background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,0.2);cursor:pointer">삭제</button>
+      </div>
+    </div>`;
+  });
+
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+// 초기 렌더링 + 추가/삭제 시 갱신
+function renderAllUserStocks() {
+  renderUserWatchlist();
+  renderUserPortfolio();
+}
+
 function addStock() {
   let name = document.getElementById('addName').value.trim();
   let ticker = document.getElementById('addTicker').value.trim().toUpperCase();
@@ -6034,6 +6140,7 @@ function addStock() {
   document.getElementById('addTicker').value = '';
   document.getElementById('addPrice').value = '';
   document.getElementById('addMemo').value = '';
+  renderAllUserStocks(); // 관심종목/포트폴리오 탭에도 즉시 반영
 }
 
 function removeStock(ticker) {
@@ -6110,10 +6217,12 @@ function addInsightToWatchlist(insightId) {
     modalBtn.disabled = true;
   }
 
-  alert(`✅ ${stockName} (${stockTicker})이(가) 관심 종목에 추가되었습니다!\n\n✅ 브라우저에 저장되어 새로고침해도 유지됩니다.`);
+  renderAllUserStocks(); // 관심종목 탭에도 즉시 반영
+  alert(`✅ ${stockName} (${stockTicker})이(가) 관심 종목에 추가되었습니다!\n\n☁️ 클라우드에 저장되어 모든 기기에서 볼 수 있습니다.`);
 }
 
 renderStockList();
+renderAllUserStocks();
 
 
 // 개별종목 상세 모달
