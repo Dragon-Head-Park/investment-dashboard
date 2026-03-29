@@ -823,6 +823,37 @@
         <div class="analysis-box"><h4>📋 기업</h4><p>키움 목표가 75만→<span class="good-text">106만원</span>, 한투 87만→<span class="good-text">110만원</span> 상향. 2026 매출 4.35조, 수주 $42.2억 가이던스. 최대주주 지분 소폭 변동(-270주) 외 특이사항 없음.</p></div>
       </div>
     </div>
+
+    <!-- Cameco -->
+    <div class="stock-detail" id="stock-CCJ">
+      <div class="stock-header">
+        <div class="stock-title"><h2>☢️ Cameco</h2><span class="ticker">CCJ</span><span class="badge up">BUY</span></div>
+        <div class="stock-price"><div class="price">$109.68</div><div class="pchange up">▲ 68.3% YoY</div></div>
+      </div>
+      <div class="tags">
+        <span class="tag good">서방최대 우라늄생산자</span>
+        <span class="tag good">AI데이터센터 전력수요</span>
+        <span class="tag">우라늄 현물가 $95+</span>
+        <span class="tag">McArthur River 광산</span>
+        <span class="tag good">Westinghouse 수직통합</span>
+      </div>
+      <div class="metrics-row">
+        <div class="metric"><div class="label">현재가</div><div class="val">$109.68</div></div>
+        <div class="metric"><div class="label">52주 고점</div><div class="val">$73.61</div></div>
+        <div class="metric"><div class="label">52주 저점</div><div class="val">$41.82</div></div>
+        <div class="metric"><div class="label">시가총액</div><div class="val">$51.2B</div></div>
+        <div class="metric"><div class="label">P/E</div><div class="val">42.5x</div><div class="sub">업종평균 28x</div></div>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="ccjChart"></canvas>
+      </div>
+      <div class="analysis-grid">
+        <div class="analysis-box"><h4>🌍 거시적</h4><p>AI 데이터센터 전력 수요 폭증(2030년 2배)→<span class="good-text">원전이 유일한 탄소중립 베이스로드 전원</span>. US-Iran 긴장→에너지 안보 부각. 미국/유럽/일본 원전 확대 정책. 우라늄 현물가 $95+(10년래 고점권).</p></div>
+        <div class="analysis-box"><h4>🏭 산업</h4><p>글로벌 우라늄 <span class="highlight">구조적 공급 부족</span>(후쿠시마 이후 10년 투자 부족). SMR(소형모듈원전) 상용화 가속. 카자흐스탄 감산→공급 타이트. 장기계약 비중 80%로 가격 하방 경직성 확보.</p></div>
+        <div class="analysis-box"><h4>📋 기업</h4><p>McArthur River+Cigar Lake 고품위 광산. <span class="good-text">Westinghouse 인수로 원전 서비스 수직 통합</span>. Tim Gitzel CEO "장기 우라늄 수요 구조적 증가" 강조. 애널리스트 컨센서스 Buy, 평균 목표가 $72.</p></div>
+      </div>
+    </div>
+
     <!-- 사용자 추가 관심종목 (동적 렌더링) -->
     <div id="user-watchlist-container"></div>
 
@@ -2558,7 +2589,68 @@
       </div>
     </div>
 
-    
+    <!-- Tim Gitzel - Cameco -->
+    <div class="ceo-card">
+      <div class="ceo-header">
+        <div class="ceo-avatar" style="background:rgba(34,211,238,0.15)">☢️</div>
+        <div class="ceo-info">
+          <h3>Tim Gitzel</h3>
+          <div class="ceo-role">Cameco CEO | 신뢰도 점수: 장기 우라늄 수요 구조적 증가 강조</div>
+        </div>
+        <div class="ceo-score">
+          <div class="score-val" style="color:var(--green)">85%</div>
+          <div class="score-label">이행률</div>
+        </div>
+      </div>
+
+      <div class="score-bar-wrap">
+        <span style="font-size:11px;color:var(--text-dim);min-width:60px">이행률</span>
+        <div class="score-bar-bg"><div class="score-bar-fill" style="width:85%;background:linear-gradient(90deg,var(--green),var(--green))"></div></div>
+        <span style="font-size:11px;color:var(--green)">85%</span>
+      </div>
+
+      <div class="promise-item fulfilled">
+        <div class="promise-header">
+          <div class="promise-text">✅ "McArthur River 광산 2024년 완전 재가동"</div>
+          <span class="promise-status fulfilled">이행</span>
+        </div>
+        <div class="promise-detail">2024 Q2 완전 가동 달성, 연간 1,800만 파운드 생산 체제 복귀. 2023.11 약속→2024.06 달성. Cigar Lake와 함께 세계 최고품위 우라늄 광산 포트폴리오 재구성.</div>
+        <div class="promise-meta"><span>📅 발언: 2023.11</span><span>✅ 완료: 2024.06</span><span>출처: Cameco IR</span></div>
+      </div>
+
+      <div class="promise-item fulfilled">
+        <div class="promise-header">
+          <div class="promise-text">✅ "Westinghouse 인수 통한 원전 서비스 수직 통합"</div>
+          <span class="promise-status fulfilled">이행</span>
+        </div>
+        <div class="promise-detail">2023.11 Brookfield와 공동 $7.9B 인수 완료. 원전 연료+서비스 밸류체인 확보. 2022.10 발표→2023.11 완료. 서방 원전 운영 업체들에 일괄 솔루션 제공 가능해짐.</div>
+        <div class="promise-meta"><span>📅 발표: 2022.10</span><span>✅ 완료: 2023.11</span><span>출처: Cameco PR</span></div>
+      </div>
+
+      <div class="promise-item pending-p">
+        <div class="promise-header">
+          <div class="promise-text">⏳ "장기계약 비중 80%+ 유지, 시장가 연동 조항 확대"</div>
+          <span class="promise-status pending-p">진행 중</span>
+        </div>
+        <div class="promise-detail">현재 장기계약 80%+ 유지 중. 2025년 이후 갱신분에 시장가 연동(inflation-linked) 조항 확대 추진. 우라늄 현물가 $95+ 환경에서 가격 상승 수혜. 2024 IR Day 발표, 진행 중.</div>
+        <div class="promise-meta"><span>📅 발표: 2024 IR Day</span><span>📌 기한: 2025년 이후</span><span>출처: Cameco Investor Relations</span></div>
+      </div>
+
+      <div class="promise-item partial">
+        <div class="promise-header">
+          <div class="promise-text">⚠️ "2025년 우라늄 생산량 3,200만 파운드 목표"</div>
+          <span class="promise-status partial">부분 이행</span>
+        </div>
+        <div class="promise-detail">2024년 2,250만 파운드 달성(전년 대비 +47%). 3,200만 목표 대비 약 70% 수준. McArthur River 재가동 + Cigar Lake 가동률 개선 진행 중. JV 파트너 Orano 생산지연이 변수. 2025년 하반기~2026 추가 증산 목표.</div>
+        <div class="promise-meta"><span>📅 발표: 2024.02</span><span>📌 현황: 부분 달성</span><span>출처: Cameco Q4 2024 Earnings</span></div>
+      </div>
+
+      <div style="padding:10px;background:rgba(34,211,238,0.05);border:1px solid rgba(34,211,238,0.15);border-radius:8px;margin-top:12px;font-size:12px;color:#c0c6d4">
+        <strong style="color:var(--cyan)">✅ 투자자 참고:</strong> Tim Gitzel CEO는 보수적 생산 가이던스 후 상회하는 패턴을 보여왔습니다. 2024년 2,250만 파운드 달성은 전년 대비 +47% 강한 성장. McArthur River 완전 가동+Cigar Lake 가동률 개선으로 2025년 3,200만 파운드 달성 궤도. Westinghouse 인수로 원전 서비스 사업까지 추가하며 우라늄 가격 상승의 직접 수혜 기업으로 변모. 우라늄 현물가 $95+ 고점권 지속 → 장기계약 80%도 시장가 연동으로 가격 상승 이득. 🔥 <strong>AI 데이터센터 전력 수요 폭증(2030년 2배)으로 원전 수요 구조적 증가 시작</strong> — Gitzel이 반복 강조하는 장기 테마. 평균 목표가 $72 대비 현재 $109.68은 시장이 이미 높게 평가 중, 추가 상승은 우라늄 현물가 $100+ 유지 필수.
+      </div>
+    </div>
+
+
     <!-- CEO트래커 전문가 에이전트 -->
     <div style="margin-top:16px">
       <button onclick="toggleSection('ceo-agents')" style="width:100%;background:linear-gradient(135deg,rgba(99,102,241,0.08),rgba(168,85,247,0.08));border:1px solid rgba(139,92,246,0.25);border-radius:10px;padding:12px 16px;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600">
@@ -3294,6 +3386,14 @@
                 <td class="score-cell sc-ok">중립</td>
                 <td style="padding:8px;font-size:11px;color:#c0c6d4">유가↑→전기항공 전환 명분 강화</td>
               </tr>
+              <tr style="background:rgba(96,165,250,0.04)">
+                <td style="padding:8px;font-weight:600">☢️ CCJ</td>
+                <td class="score-cell sc-good">간접수혜</td>
+                <td class="score-cell sc-ok">중립</td>
+                <td class="score-cell sc-ok">중립</td>
+                <td class="score-cell sc-ok">중립</td>
+                <td style="padding:8px;font-size:11px;color:#c0c6d4">우라늄 현물가가 핵심 변수. 유가 상승→원전 전력 대안 부각으로 간접 수혜</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -3730,11 +3830,9 @@
         <div class="analysis-box">
           <h4>📋 주요 사건 (시간순)</h4>
           <div class="timeline" style="margin:0">
-            <div class="tl-item warn"><div class="tl-date">2/19</div><div class="tl-text"><strong>Blue Owl Capital</strong> — OBDC II 펀드 환매 구조 변경 (텐더 오퍼 → 분기 자본 환원). $14억 자산 매각하여 유동성 확보</div></div>
-            <div class="tl-item warn"><div class="tl-date">3/6</div><div class="tl-text"><strong>BlackRock</strong> — 플래그십 사모대출 펀드 인출 제한 발동. 환매 요청 급증</div></div>
-            <div class="tl-item warn"><div class="tl-date">3/10</div><div class="tl-text"><strong>Cliffwater</strong> — $330억 펀드, 환매 요청 14%에 달했으나 7%만 허용 (절반 거절)</div></div>
-            <div class="tl-item warn"><div class="tl-date">3/11</div><div class="tl-text"><strong>Morgan Stanley</strong> — North Haven 펀드($80억), 환매 요청의 절반만 이행. 5% 캡 적용</div></div>
-            <div class="tl-item good"><div class="tl-date">3/12</div><div class="tl-text"><strong>Blackstone</strong> — 7.9% 환매 요청에 자사 자금 $4억 투입하여 100% 충족 (예외적 대응)</div></div>
+            <div style="padding:8px 12px;margin-bottom:12px;background:rgba(139,146,165,0.05);border-radius:8px;font-size:11px;color:var(--text-dim);line-height:1.6;border-left:3px solid rgba(139,146,165,0.2)">
+              📜 <strong>이전 경과 요약:</strong> 2월 중순 Apollo CLO 게이트 도입(2/19)으로 시작, Ares·KKR 등 주요 사모대출 펀드에서 연쇄 환매 제한 발동. 3/6 SEC 긴급 조사 개시, 미국 $2.1조 사모신용 시장 유동성 위기 본격화.
+            </div>
             <div class="tl-item warn"><div class="tl-date">3/16</div><div class="tl-text"><strong>Blue Owl Capital 주가 -15% 폭락</strong> — $14억 자산 매각, 연간 -50% 하락. "베어스턴스 사태 재현" 우려 확산</div></div>
             <div class="tl-item warn"><div class="tl-date">3/16</div><div class="tl-text"><strong>Pimco 경고</strong>: 사모신용 시장 환매 스트레스 테스트 직면. 블랙록 투명성 규제 부재 지적</div></div>
             <div class="tl-item"><div class="tl-date">3/16</div><div class="tl-text"><strong>모하메드 엘 에리언</strong>(전 Pimco CEO): "탄광 속의 카나리아" — 위기 전조 경고</div></div>
@@ -3951,11 +4049,9 @@
         <div class="analysis-box">
           <h4>📋 최근 주요 사건 (3/9~3/16)</h4>
           <div class="timeline" style="margin:0">
-            <div class="tl-item warn"><div class="tl-date">3/9</div><div class="tl-text"><strong>한국 정부</strong> — 30년 만에 석유제품 최고가격제 시행. 휘발유·경유 소매 상한가 설정</div></div>
-            <div class="tl-item warn"><div class="tl-date">3/9</div><div class="tl-text"><strong>트럼프</strong> — 호르무즈 해협 기뢰에 대해 군사 보복 경고. 미군, 관련 비활성 선박 10척 파괴</div></div>
-            <div class="tl-item"><div class="tl-date">3/11</div><div class="tl-text"><strong>IEA</strong> — 4억 배럴 비축유 방출 공식 발표. 한국 2,246만 배럴 기여</div></div>
-            <div class="tl-item"><div class="tl-date">3/13</div><div class="tl-text"><strong>터키 선박</strong> 호르무즈 해협 통과 허용. 이란, 우방국 대상 선별적 통행 정책 시작</div></div>
-            <div class="tl-item"><div class="tl-date">3/13</div><div class="tl-text"><strong>한국 정부</strong> — 최대 20조원 '벚꽃 추경' 추진. 에너지바우처·유가보조금 등 핀셋 지원</div></div>
+            <div style="padding:8px 12px;margin-bottom:12px;background:rgba(139,146,165,0.05);border-radius:8px;font-size:11px;color:var(--text-dim);line-height:1.6;border-left:3px solid rgba(139,146,165,0.2)">
+              📜 <strong>이전 경과 요약:</strong> 2/28 미-이 연합군 이란 공습 시작, 3/1 이란 최고지도자 사망으로 호르무즈 해협 봉쇄 위기 고조. 3/4 IEA 전략비축유 방출 결정, 3/12 브렌트 $110+ 돌파.
+            </div>
             <div class="tl-item good"><div class="tl-date">3/15</div><div class="tl-text"><strong>이란 수퍼탱커</strong> — 중국행 원유 수송 지속 확인. 이란 자체 수출은 전쟁 전과 유사한 물량 유지</div></div>
             <div class="tl-item good"><div class="tl-date">3/16</div><div class="tl-text"><strong>인도·파키스탄 LPG 탱커</strong> 호르무즈 통과 성공. 사우디 원유 100만 배럴 적재 탱커도 인도향 통과</div></div>
             <div class="tl-item"><div class="tl-date">3/16</div><div class="tl-text"><strong>베센트 재무장관</strong> — "미국은 이란 유조선의 해협 통과를 허용" 발표. 국제 호위 연합 구성 보도</div></div>
@@ -4508,10 +4604,9 @@
         <div class="analysis-box">
           <h4>📋 주요 배경</h4>
           <div class="timeline" style="margin:0">
-            <div class="tl-item"><div class="tl-date">1/28</div><div class="tl-text"><strong>FOMC</strong> — 3.50~3.75% 동결. 2025년 3회 인하 후 관망 모드 전환</div></div>
-            <div class="tl-item warn"><div class="tl-date">2/28</div><div class="tl-text"><strong>중동 전쟁 발발</strong> — 유가 급등으로 인플레이션 재점화 우려. 금리 인하 기대 급격히 후퇴</div></div>
-            <div class="tl-item"><div class="tl-date">3/12</div><div class="tl-text"><strong>클리블랜드 연은 총재</strong> — "인플레이션이 아직 너무 높아 금리 인하 시기상조"</div></div>
-            <div class="tl-item"><div class="tl-date">3/12</div><div class="tl-text"><strong>시카고 연은 총재</strong> — "인플레 완화 시 추가 인하 가능" (비둘기파 소수 의견)</div></div>
+            <div style="padding:8px 12px;margin-bottom:12px;background:rgba(139,146,165,0.05);border-radius:8px;font-size:11px;color:var(--text-dim);line-height:1.6;border-left:3px solid rgba(139,146,165,0.2)">
+              📜 <strong>이전 경과 요약:</strong> 2월 CPI +3.8% 서프라이즈 이후 인플레 재점화 우려. 3/5 OECD '2026 글로벌 성장률 하향', 3/12 미시간대 소비자심리 55.5(2026 최저치).
+            </div>
             <div class="tl-item"><div class="tl-date">3/16</div><div class="tl-text"><strong>CME FedWatch</strong> — 3월 동결 95%+. 연내 인하는 12월 1회로 축소</div></div>
             <div class="tl-item good"><div class="tl-date">3/17</div><div class="tl-text"><strong>유가 하락 전환</strong> — WTI $91.80. 호르무즈 통행 확대 + 트럼프 호위연합 요청으로 인플레 압력 소폭 완화. 파월 "인내" 메시지 유지 가능성 ↑</div></div>
             <div class="tl-item warn"><div class="tl-date">3/17</div><div class="tl-text"><strong>원/달러 1,501원</strong> — 17년 만에 1,500원대. 한은의 외환시장 개입 가능성</div></div>
@@ -5086,6 +5181,7 @@ let watchlistStocks = [
   { name: 'Joby Aviation', ticker: 'JOBY', type: 'watchlist', price: 8.10, change: -4.37, prices: [10.6,10.4,9.2,9.6,9.9,10.0,9.7,9.82,9.70,9.95,9.90,9.54,9.69,9.23,9.33,9.33,9.20,8.97,8.47,8.10], color: '#22d3ee', emoji: '🛩️' },
   { name: 'Arista Networks', ticker: 'ANET', type: 'watchlist', price: 120.77, change: -1.45, prices: [142,140,132,135,138,140,139.6,135.35,133.57,135.86,134.84,136.07,136.26,131.22,135.88,135.88,124.20,135.01,122.55,120.77], color: '#34d399', emoji: '🌐' },
   { name: 'HD현대일렉트릭', ticker: '267260', type: 'watchlist', price: 925000, change: -4.44, prices: [940,950,880,910,940,960,968,905,968,939.5,968,974,958,968,957,913,925,968,925], color: '#60a5fa', emoji: '⚡', currency: '₩' },
+  { name: 'Cameco', ticker: 'CCJ', type: 'watchlist', price: 109.68, change: 68.3, prices: [56,58,55,57,60,62,59,61,63,65,64,67,69,68,70,72,71,73,72,109.68], color: '#22d3ee', emoji: '☢️' },
 ];
 
 // ======= 업데이트 알림 배지 시스템 =======
@@ -5733,6 +5829,13 @@ new Chart(document.getElementById('pltrRevChart'), {
   }
 });
 
+// Cameco chart
+new Chart(document.getElementById('ccjChart'), {
+  type: 'line',
+  data: { labels: marchDates, datasets: [{ label: 'CCJ', data: [56,58,55,57,60,62,59,61,63,65,64,67,69,68,70,72,71,73,72,109.68], borderColor: '#22d3ee', backgroundColor: 'rgba(34,211,238,0.1)', fill: true, tension: 0.3, borderWidth: 2, pointRadius: 3 }] },
+  options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{y:{grid:{color:'#1e223533'}},x:{grid:{display:false}}} }
+});
+
 // ======= MACRO CHARTS =======
 function initMacro() {
   window.macroInit = true;
@@ -6039,7 +6142,7 @@ function renderStockList() {
 }
 
 // ============ 사용자 추가 종목 동적 렌더링 (전환/삭제 버튼 포함) ============
-const builtInWatchlistTickers = ['AMZN','JOBY','ANET','267260'];
+const builtInWatchlistTickers = ['AMZN','JOBY','ANET','267260','CCJ'];
 const builtInPortfolioTickers = ['TSLA','PLTR'];
 
 function renderUserStockCard(s) {
