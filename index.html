@@ -6074,6 +6074,8 @@ function renderUserPortfolio() {
 function renderAllUserStocks() {
   renderUserWatchlist();
   renderUserPortfolio();
+  if (typeof filterHotIssuePortfolioImpact === 'function') filterHotIssuePortfolioImpact();
+  if (typeof renderMacroPortfolioImpact === 'function') renderMacroPortfolioImpact();
 }
 
 function addStock() {
@@ -6124,6 +6126,7 @@ function removeStock(ticker) {
   if (confirm(`${ticker} 종목을 삭제하시겠습니까?`)) {
     allStocks = allStocks.filter(s => s.ticker !== ticker);
     renderStockList();
+    renderAllUserStocks();
 
     // Supabase에서도 삭제 (DB에 있는 경우)
     sbDeleteStock(ticker)
@@ -7518,6 +7521,83 @@ function renderMacroPortfolioImpact() {
   container.innerHTML = html;
 }
 renderMacroPortfolioImpact();
+
+// 핫이슈 포트폴리오 영향 섹션 동적 필터링 — 등록된 종목만 표시
+function filterHotIssuePortfolioImpact() {
+  const registeredTickers = allStocks.map(s => s.ticker);
+  // 종목명↔티커 매핑 (하드코딩된 이름으로도 매칭)
+  const nameToTicker = {
+    'TSLA': 'TSLA', 'PLTR': 'PLTR', 'AMZN': 'AMZN', 'JOBY': 'JOBY',
+    'ANET': 'ANET', 'HD현대일렉트릭': '267260', 'HD현대': '267260',
+    'TSLA/JOBY': ['TSLA','JOBY']
+  };
+
+  // 1) .issue-impact 섹션 필터링
+  document.querySelectorAll('.issue-impact').forEach(section => {
+    const items = section.querySelectorAll('.impact-item');
+    let visibleCount = 0;
+    items.forEach(item => {
+      const strong = item.querySelector('strong');
+      if (!strong) return;
+      const text = strong.textContent.trim();
+      const mapped = nameToTicker[text];
+      let isRegistered = false;
+      if (Array.isArray(mapped)) {
+        isRegistered = mapped.some(t => registeredTickers.includes(t));
+      } else if (mapped) {
+        isRegistered = registeredTickers.includes(mapped);
+      } else {
+        // 직접 매칭 시도
+        isRegistered = registeredTickers.includes(text) || text.includes('직접 보유') || text.includes('시장 심리');
+      }
+      if (isRegistered) {
+        item.style.display = '';
+        visibleCount++;
+      } else {
+        item.style.display = 'none';
+      }
+    });
+    // 모두 숨겨지면 안내 메시지
+    let noMatch = section.querySelector('.no-match-msg');
+    if (visibleCount === 0) {
+      if (!noMatch) {
+        noMatch = document.createElement('div');
+        noMatch.className = 'no-match-msg impact-item';
+        noMatch.innerHTML = '<span class="impact-dot neu"></span>현재 등록된 종목과 직접 연관이 없는 이슈입니다.';
+        section.appendChild(noMatch);
+      }
+      noMatch.style.display = '';
+    } else if (noMatch) {
+      noMatch.style.display = 'none';
+    }
+  });
+
+  // 2) 원자재 포트폴리오 영향 테이블 필터링
+  const commodityTable = document.querySelector('.macro-card table');
+  if (commodityTable) {
+    const rows = commodityTable.querySelectorAll('tbody tr');
+    rows.forEach(row => {
+      const firstCell = row.querySelector('td');
+      if (!firstCell) return;
+      const text = firstCell.textContent.trim();
+      // 이모지 제거 후 매칭
+      const clean = text.replace(/[^\w가-힣]/g, '').trim();
+      let isRegistered = false;
+      for (const [name, ticker] of Object.entries(nameToTicker)) {
+        if (clean.includes(name.replace(/[^\w가-힣]/g, ''))) {
+          if (Array.isArray(ticker)) {
+            isRegistered = ticker.some(t => registeredTickers.includes(t));
+          } else {
+            isRegistered = registeredTickers.includes(ticker);
+          }
+          break;
+        }
+      }
+      row.style.display = isRegistered ? '' : 'none';
+    });
+  }
+}
+filterHotIssuePortfolioImpact();
 
 function showInsightModal(id) {
   const d = insightData[id];
