@@ -5162,6 +5162,8 @@ checkBadges();
 
 // ======= MAIN TAB SWITCH =======
 function switchTab(tab) {
+  // 안전장치: 모달이 열린 상태에서 탭 전환 시 body overflow 복구
+  document.body.style.overflow = '';
   document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
   document.getElementById('tab-' + tab).classList.add('active');
@@ -5182,6 +5184,7 @@ function switchTab(tab) {
 // ======= SUB TAB SWITCH (개별종목 내부) =======
 let currentSubTab = 'portfolio';
 function switchSubTab(sub) {
+  document.body.style.overflow = '';
   currentSubTab = sub;
   document.querySelectorAll('.sub-content').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.sub-tab-btn').forEach(el => el.classList.remove('active'));
@@ -5908,6 +5911,10 @@ var stockComments = {
   '267260': {
     expertComment: { date: '2026.03.28', verdict: '매수', comment: '2026년 수주 목표 $42.2억(+10.5% YoY), 매출 4.35조원 가이던스. 미국 최대 송전망 전력회사와 765kV 초고압 변압기 986억원 수주 — 미국 최고 전압 사양 수주로 대형 프로젝트 교두보 확보. 키움 106만원·한투 110만원 목표가 상향. 울산+미국 변압기 공장 증설 진행 중.', macro: 'AI 데이터센터+전동화+ESS 확산→글로벌 전력 인프라 투자 급증. 초고압 변압기 글로벌 공급 부족은 구조적 현상(10년+). 미국 전력망 $1T+ 투자 계획. 생산능력 확대를 위한 울산·미국 공장 증설이 성장 병목 해소 핵심.', catalysts: ['765kV 초고압 변압기 미국 대형 수주 확대','울산·미국 공장 증설 완료','2026 수주 목표 $42.2억 달성 여부','글로벌 초고압 변압기 공급 부족 지속'] },
     investorComment: { date: '2026.03.28', action: '보유', guruEmoji: '🦅', guruName: 'George Soros 스타일', guruStyle: '역발상 투자 — 시장 전환점 포착', analysis: 'Soros 관점에서 전력 인프라는 "10년 메가트렌드". 765kV 미국 초고압 수주는 기술력 입증+대형 후속 수주 교두보. 키움 106만·한투 110만원 상향은 펀더멘털 건재 신호. 다만 52주 고점 1,116,000원 대비 조정 구간이며, 2026 가이던스가 시장 기대 대비 보수적이므로 신규 매수보다 보유가 합리적.', bullCase: '전력 인프라 메가트렌드 최대 수혜. 765kV 미국 수주로 기술 리더십 확인. 울산·미국 증설로 생산능력 확대.', bearCase: '52주 고점 대비 -13% 조정. 2026 가이던스 시장 기대 하회. 글로벌 경쟁사 생산능력 확대 가능성.', guruInsight: '"Soros는 구조적 변화에서 기회를 찾는다. 765kV 미국 수주는 HD현대일렉트릭이 글로벌 초고압 시장의 핵심 공급자임을 증명하는 이정표다."', keyMetrics: ['목표가 키움 106만·한투 110만원','2026 수주 목표 $42.2억(+10.5%)','765kV 미국 초고압 수주 986억원','현재 968,000원 (52주 264,500~1,116,000)'] }
+  },
+  'CCJ': {
+    expertComment: { date: '2026.03.28', verdict: '매수', comment: 'AI 데이터센터 전력 수요 폭증(2030년 2배 전망)으로 원전이 유일한 탄소중립 베이스로드 전원으로 부상. 미국·유럽·일본 모두 원전 확대 정책 전환. 우라늄은 10년간 투자 부족으로 구조적 공급 부족. Cameco는 서방 최대 우라늄 생산자로 McArthur River+Cigar Lake 고품위 광산 보유. 장기 계약 비중 80%+로 가격 하방 경직성 확보. Westinghouse 인수로 원전 서비스 수직 통합 달성.', macro: 'US-Iran 긴장→에너지 안보 중요성 부각→원전 정책 우호적. AI CapEx $200B+ 시대 데이터센터 전력 수요가 원전 르네상스의 핵심 촉매. 미국 원전 세액공제(IRA) 연장 가능성. 우라늄 현물가 $95+ 유지, 장기계약가 $80+ 안정적.', catalysts: ['AI 데이터센터 전용 SMR 계약 발표','미국 원전 세액공제 연장 법안','우라늄 현물가 $100 돌파','Westinghouse 원전 서비스 매출 성장'] },
+    investorComment: { date: '2026.03.28', action: '매수', guruEmoji: '🏔️', guruName: 'Jim Rogers 스타일', guruStyle: '원자재 슈퍼사이클 — 장기 공급부족 투자', analysis: 'Rogers는 10년간 투자 부족으로 구조적 공급 부족 상태인 원자재에 베팅한다. 우라늄은 정확히 이 케이스: 후쿠시마 이후 10년간 신규 광산 투자 급감, 그런데 AI 데이터센터+탈탄소 정책으로 수요는 급증. Cameco는 서방 최대 생산자로, McArthur River는 세계 최대 고품위 우라늄 광산. 장기계약 80%로 가격 안정성+현물가 상승 시 추가 업사이드.', bullCase: '구조적 우라늄 공급 부족(10년+). AI 데이터센터 전력 수요 폭증→원전 르네상스. 서방 최대 생산자 프리미엄. Westinghouse 통합으로 원전 밸류체인 수직 통합.', bearCase: '원전 프로젝트 지연/취소 리스크. 카자흐스탄(Kazatomprom) 증산 가능성. 우라늄 현물가 조정 시 센티먼트 악화. 장기계약 가격 인상 지연.', guruInsight: '"Rogers는 아무도 안 볼 때 원자재에 투자하라고 했다. 지금 우라늄은 모든 에너지 전문가가 주목하기 시작한 단계 — 아직 초기이지만 구조적 상승이 확실한 자산이다."', keyMetrics: ['우라늄 현물가 $95+ (10년래 고점권)','장기계약 비중 80%+','McArthur River 연간 1,800만 파운드','Westinghouse 연매출 $5B+'] }
   }
 };
 
@@ -7522,7 +7529,8 @@ const macroImpactData = {
   'AMZN': { emoji: '📦', impact: '부정적', cls: 'warn-text', desc: '유가 상승 → 물류비 증가. 단, Prime Video Ultra 가격 인상(4/10, $4.99)으로 ARPU 방어 가능.' },
   'JOBY': { emoji: '🛩️', impact: '간접 수혜', cls: 'good-text', desc: '유가 급등이 전기항공 수요 촉매로 작용. FAA 인증 4단계 진행 중.' },
   'ANET': { emoji: '🌐', impact: '구조적 수혜', cls: 'good-text', desc: 'AI 인프라 투자 지속 → 데이터센터 네트워킹 수혜. 매출 +25% 가이던스.' },
-  '267260': { emoji: '⚡', impact: '강한 수혜', cls: 'good-text', desc: 'US-Iran 긴장 + 전력 인프라 메가트렌드. 수주잔고 견조.' }
+  '267260': { emoji: '⚡', impact: '강한 수혜', cls: 'good-text', desc: 'US-Iran 긴장 + 전력 인프라 메가트렌드. 수주잔고 견조.' },
+  'CCJ': { emoji: '☢️', impact: '강한 수혜', cls: 'good-text', desc: 'US-Iran 긴장→에너지 안보 부각+AI 데이터센터 전력 수요 폭증→원전 르네상스. 구조적 우라늄 공급 부족 지속.' }
 };
 
 function renderMacroPortfolioImpact() {
@@ -7550,6 +7558,7 @@ function filterHotIssuePortfolioImpact() {
   const nameToTicker = {
     'TSLA': 'TSLA', 'PLTR': 'PLTR', 'AMZN': 'AMZN', 'JOBY': 'JOBY',
     'ANET': 'ANET', 'HD현대일렉트릭': '267260', 'HD현대': '267260',
+    'CCJ': 'CCJ', 'Cameco': 'CCJ', '카메코': 'CCJ',
     'TSLA/JOBY': ['TSLA','JOBY']
   };
 
