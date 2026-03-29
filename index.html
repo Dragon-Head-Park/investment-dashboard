@@ -2620,10 +2620,10 @@
       <div style="font-size:13px;color:#c0c6d4;line-height:1.8">
         <p><strong>종목 추가:</strong> 종목명 또는 티커 중 하나만 입력해도 추가됩니다. 분류를 선택하고 '추가' 버튼을 누르세요.</p>
         <p><strong>종목 삭제:</strong> 아래 목록에서 '삭제' 버튼을 클릭하세요.</p>
-        <p><strong>데이터 저장:</strong> 추가/삭제한 종목은 브라우저의 localStorage에 자동 저장됩니다. 새로고침하거나 브라우저를 닫아도 유지됩니다.</p>
-        <p><strong>대시보드 영구 반영:</strong> 종목을 대시보드 HTML 파일 자체에 영구적으로 추가하고 싶다면, Claude에게 "OO 종목 추가해줘"라고 요청하시면 됩니다.</p>
-        <p><strong>저장 초기화:</strong> 브라우저에 저장된 종목 변경사항을 초기화하려면 아래 버튼을 누르세요.</p>
-        <button onclick="if(confirm('저장된 종목 변경사항을 모두 초기화하시겠습니까?\\n(기본 종목만 남습니다)')){localStorage.removeItem('userAddedStocks');localStorage.removeItem('userRemovedStocks');location.reload()}" class="btn" style="font-size:12px;padding:6px 14px;background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,0.2);border-radius:6px;cursor:pointer;margin-top:4px">🔄 종목 변경사항 초기화</button>
+        <p><strong>임시 저장:</strong> 여기서 추가/삭제한 종목은 현재 브라우저에 임시 저장됩니다 (새로고침해도 유지).</p>
+        <p><strong>모든 기기 동기화:</strong> 모든 기기/브라우저에서 동일하게 반영하고 싶다면, Claude에게 <strong>"OO 종목 추가해줘"</strong> 또는 <strong>"OO 종목 삭제해줘"</strong>라고 요청하세요. GitHub에 저장되어 어디서든 동일하게 보입니다.</p>
+        <p><strong>저장 초기화:</strong> 브라우저 임시 저장을 초기화하려면 아래 버튼을 누르세요.</p>
+        <button onclick="if(confirm('브라우저 임시 저장을 초기화하시겠습니까?\\n(GitHub에 저장된 종목만 남습니다)')){localStorage.removeItem('userAddedStocks');localStorage.removeItem('userRemovedStocks');location.reload()}" class="btn" style="font-size:12px;padding:6px 14px;background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,0.2);border-radius:6px;cursor:pointer;margin-top:4px">🔄 브라우저 임시 저장 초기화</button>
         <p style="margin-top:10px;padding:10px;background:rgba(96,165,250,0.08);border-radius:8px;border:1px solid rgba(96,165,250,0.15)">
           💡 <strong>팁:</strong> 거시경제 분석, 산업 동향, 기업 이슈 등 상세 분석이 필요한 종목은 Claude에게 요청하시면 실시간 데이터로 업데이트해드립니다.
         </p>
@@ -5894,42 +5894,69 @@ var stockComments = {
 };
 
 // ======= STOCK MANAGEMENT =======
-// localStorage에서 사용자 추가 종목 불러오기
+// GitHub JSON + localStorage 하이브리드 동기화
+const USER_STOCKS_URL = './user_stocks.json';
 let allStocks = [...portfolioStocks, ...watchlistStocks];
-(function loadUserStocks() {
+
+// 1단계: localStorage에서 먼저 빠르게 로드 (오프라인 캐시)
+(function loadLocalCache() {
   try {
     const saved = localStorage.getItem('userAddedStocks');
     if (saved) {
-      const userStocks = JSON.parse(saved);
-      userStocks.forEach(s => {
-        // 이미 기본 종목에 있으면 스킵
-        if (!allStocks.find(ex => ex.ticker === s.ticker)) {
-          allStocks.push(s);
-        }
+      JSON.parse(saved).forEach(s => {
+        if (!allStocks.find(ex => ex.ticker === s.ticker)) allStocks.push(s);
       });
     }
-    // 삭제된 종목 반영
     const removed = localStorage.getItem('userRemovedStocks');
     if (removed) {
       const removedTickers = JSON.parse(removed);
       allStocks = allStocks.filter(s => !removedTickers.includes(s.ticker));
     }
-  } catch(e) { /* localStorage 사용 불가 시 무시 */ }
+  } catch(e) {}
 })();
 
-// 사용자 변경사항 저장 함수
+// 2단계: GitHub JSON에서 최신 데이터 가져와서 병합 (비동기)
+(function loadGitHubStocks() {
+  fetch(USER_STOCKS_URL + '?t=' + Date.now())
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      if (!data) return;
+      let changed = false;
+      // 추가된 종목 반영
+      if (data.added && data.added.length > 0) {
+        data.added.forEach(s => {
+          if (!allStocks.find(ex => ex.ticker === s.ticker)) {
+            allStocks.push(s);
+            changed = true;
+          }
+        });
+      }
+      // 삭제된 종목 반영
+      if (data.removed && data.removed.length > 0) {
+        const before = allStocks.length;
+        allStocks = allStocks.filter(s => !data.removed.includes(s.ticker));
+        if (allStocks.length !== before) changed = true;
+      }
+      // localStorage 캐시도 업데이트
+      try {
+        localStorage.setItem('userAddedStocks', JSON.stringify(data.added || []));
+        localStorage.setItem('userRemovedStocks', JSON.stringify(data.removed || []));
+      } catch(e) {}
+      if (changed) renderStockList();
+    })
+    .catch(() => { /* 네트워크 오류 시 localStorage 캐시 사용 */ });
+})();
+
+// 사용자 변경사항 저장 함수 (localStorage 캐시 저장)
 function saveUserStockChanges() {
   try {
-    // 기본 종목 티커 목록
     const defaultTickers = [...portfolioStocks, ...watchlistStocks].map(s => s.ticker);
-    // 사용자가 추가한 종목 (기본에 없는 것)
     const userAdded = allStocks.filter(s => !defaultTickers.includes(s.ticker));
     localStorage.setItem('userAddedStocks', JSON.stringify(userAdded));
-    // 사용자가 삭제한 종목 (기본에 있었는데 현재 없는 것)
     const currentTickers = allStocks.map(s => s.ticker);
     const userRemoved = defaultTickers.filter(t => !currentTickers.includes(t));
     localStorage.setItem('userRemovedStocks', JSON.stringify(userRemoved));
-  } catch(e) { /* localStorage 사용 불가 시 무시 */ }
+  } catch(e) {}
 }
 
 function renderStockList() {
