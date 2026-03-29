@@ -8607,10 +8607,22 @@ function closeInsightModal() {
       var bodyWrap = document.createElement('div');
       bodyWrap.className = 'card-accordion-body';
       bodyWrap.style.display = startOpen ? 'block' : 'none';
+      // guru-panel과 guru-weight-panel은 아코디언 바디에 넣지 않고 별도 보관
+      var guruPanels = [];
       while (header.nextSibling) {
-        bodyWrap.appendChild(header.nextSibling);
+        var sib = header.nextSibling;
+        if (sib.nodeType === 1 && (sib.classList.contains('guru-panel') || sib.classList.contains('guru-weight-panel'))) {
+          guruPanels.push(sib);
+          sib.parentNode.removeChild(sib);
+          continue;
+        }
+        bodyWrap.appendChild(sib);
       }
       card.appendChild(bodyWrap);
+      // guru 패널을 card(stock-detail) 바로 뒤에 삽입
+      guruPanels.forEach(function(gp) {
+        card.parentNode.insertBefore(gp, card.nextSibling);
+      });
       header.style.cursor = 'pointer';
       header.style.userSelect = 'none';
 
