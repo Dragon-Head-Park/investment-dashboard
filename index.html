@@ -2711,15 +2711,8 @@
     </div>
     <div class="macro-card">
       <h3>💡 내 포트폴리오에 미치는 영향</h3>
-      <div class="analysis-grid">
-        <div class="analysis-box"><h4>🚗 Tesla (TSLA)</h4><p><span class="good-text">단기 수혜 가능</span>: WTI $88.67 고유가 → 전기차 전환 가속. 단, 경기 둔화(GDP +0.7%) 시 고가 차량 수요 감소 우려.</p></div>
-        <div class="analysis-box"><h4>🛡️ Palantir (PLTR)</h4><p><span class="good-text">강한 수혜</span>: US-Iran 분쟁 지속 → 국방 AI 예산 확대. Rosenblatt $200 목표가 상향이 이를 반영.</p></div>
-        <div class="analysis-box"><h4>📦 Amazon (AMZN)</h4><p><span class="warn-text">부정적</span>: 유가 상승 → 물류비 증가. 단, Prime Video Ultra 가격 인상(4/10, $4.99)으로 ARPU 방어 가능.</p></div>
-      </div>
-      <div class="analysis-grid" style="margin-top:14px">
-        <div class="analysis-box"><h4>🧠 Micron (MU)</h4><p><span class="good-text">중립~긍정</span>: CapEx 과잉 우려에도 HBM 2026 전량 매진 확인. Q3 가이던스 $33.5B은 AI 메모리 폭증의 증거.</p></div>
-        <div class="analysis-box"><h4>🔬 ASML</h4><p><span class="good-text">구조적 수혜</span>: AI CapEx $600B 투자 → 파운드리 확대 → High-NA EUV 수요. P/E 28x는 5년 평균 35x 대비 30%+ 할인.</p></div>
-        <div class="analysis-box"><h4>🛡️ 한화에어로스페이스</h4><p><span class="good-text">강한 수혜</span>: US-Iran 긴장 + 나토 GDP 3%+로 방산 예산 사상 최대. 수주잔고 ₩37조+ 가시성 최고.</p></div>
+      <div id="macroPortfolioImpact" class="analysis-grid">
+        <!-- 등록된 핵심종목 + 관심종목 기반으로 동적 렌더링됨 -->
       </div>
     </div>
     <!-- 거시경제 전문가 AI 코멘트 패널 -->
@@ -5951,6 +5944,14 @@ function sbDeleteStock(ticker) {
   });
 }
 
+// Supabase에서 종목 type 변경 (portfolio ↔ watchlist)
+function sbUpdateStockType(ticker, newType) {
+  return fetch(SUPABASE_URL + '/rest/v1/user_stocks?ticker=eq.' + encodeURIComponent(ticker), {
+    method: 'PATCH', headers: SB_HEADERS,
+    body: JSON.stringify({ type: newType })
+  });
+}
+
 // 동기화 상태 표시용
 function showSyncStatus(msg, isError) {
   let el = document.getElementById('syncStatus');
@@ -5965,6 +5966,24 @@ function showSyncStatus(msg, isError) {
   el.textContent = msg;
   el.style.opacity = '1';
   setTimeout(() => { el.style.opacity = '0'; }, 2500);
+}
+
+// 종목 분류 전환 (portfolio ↔ watchlist)
+function switchStockType(ticker) {
+  const stock = allStocks.find(s => s.ticker === ticker);
+  if (!stock) return;
+  const oldType = stock.type;
+  const newType = oldType === 'portfolio' ? 'watchlist' : 'portfolio';
+  const newLabel = newType === 'portfolio' ? '핵심종목' : '관심종목';
+
+  stock.type = newType;
+  renderStockList();
+  renderAllUserStocks();
+
+  // Supabase 동기화
+  sbUpdateStockType(ticker, newType)
+    .then(() => showSyncStatus(`☁️ ${stock.name} → ${newLabel}으로 이동 완료`))
+    .catch(() => showSyncStatus('⚠️ 동기화 실패', true));
 }
 
 // 하위 호환: saveUserStockChanges는 이제 no-op (Supabase가 대체)
@@ -5999,101 +6018,59 @@ function renderStockList() {
   });
 }
 
-// ============ 사용자 추가 관심종목을 관심종목 탭에 동적 렌더링 ============
-const builtInWatchlistTickers = ['AMZN','JOBY','ANET','267260']; // 하드코딩된 기본 종목
+// ============ 사용자 추가 종목 동적 렌더링 (전환/삭제 버튼 포함) ============
+const builtInWatchlistTickers = ['AMZN','JOBY','ANET','267260'];
+const builtInPortfolioTickers = ['TSLA','PLTR'];
+
+function renderUserStockCard(s) {
+  const priceStr = s.currency === '₩' ? `₩${Number(s.price).toLocaleString()}` : `$${s.price}`;
+  const changeClass = s.change >= 0 ? 'up' : 'down';
+  const changeSign = s.change >= 0 ? '+' : '';
+  const switchLabel = s.type === 'watchlist' ? '💼 핵심종목으로 이동' : '👁️ 관심종목으로 이동';
+  const switchColor = s.type === 'watchlist' ? 'rgba(239,68,68,0.12)' : 'rgba(96,165,250,0.12)';
+  const switchText = s.type === 'watchlist' ? 'var(--red)' : 'var(--blue)';
+  const switchBorder = s.type === 'watchlist' ? 'rgba(239,68,68,0.25)' : 'rgba(96,165,250,0.25)';
+
+  return `
+  <div class="stock-detail" style="margin-bottom:12px">
+    <div class="stock-header" style="cursor:pointer" onclick="showStockDetailModal('${s.ticker}')">
+      <div class="stock-title">
+        <h2>${s.emoji || '📊'} ${s.name}</h2>
+        <span class="ticker">${s.ticker}</span>
+      </div>
+      <div class="stock-price">
+        <div class="price">${priceStr}</div>
+        ${s.change ? `<div class="pchange ${changeClass}">${changeSign}${s.change}%</div>` : ''}
+      </div>
+    </div>
+    ${s.memo ? `<div style="padding:8px 16px;font-size:12px;color:var(--text-dim)">📝 ${s.memo}</div>` : ''}
+    <div style="padding:8px 16px 12px;display:flex;justify-content:flex-end;gap:8px">
+      <button onclick="event.stopPropagation();switchStockType('${s.ticker}')" style="font-size:11px;padding:5px 14px;border-radius:6px;background:${switchColor};color:${switchText};border:1px solid ${switchBorder};cursor:pointer;font-weight:600;transition:all 0.15s" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">${switchLabel}</button>
+      <button onclick="event.stopPropagation();removeStock('${s.ticker}');renderAllUserStocks()" style="font-size:11px;padding:5px 14px;border-radius:6px;background:rgba(139,146,165,0.1);color:var(--text-dim);border:1px solid rgba(139,146,165,0.2);cursor:pointer;transition:all 0.15s" onmouseover="this.style.background='rgba(239,68,68,0.15)';this.style.color='var(--red)'" onmouseout="this.style.background='rgba(139,146,165,0.1)';this.style.color='var(--text-dim)'">삭제</button>
+    </div>
+  </div>`;
+}
 
 function renderUserWatchlist() {
   const container = document.getElementById('user-watchlist-container');
   if (!container) return;
-
-  // allStocks에서 watchlist 타입이면서 기본 종목이 아닌 것만 필터
   const userWatchlist = allStocks.filter(s => s.type === 'watchlist' && !builtInWatchlistTickers.includes(s.ticker));
-
-  if (userWatchlist.length === 0) {
-    container.innerHTML = '';
-    return;
-  }
-
-  let html = '<div style="margin-top:20px;padding-top:16px;border-top:2px solid rgba(96,165,250,0.15)">';
-  html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px"><span style="font-size:14px;font-weight:700;color:var(--blue)">➕ 내가 추가한 관심종목</span><span style="font-size:11px;padding:2px 8px;border-radius:10px;background:rgba(96,165,250,0.1);color:var(--blue)">' + userWatchlist.length + '종목</span></div>';
-
-  userWatchlist.forEach(s => {
-    const cur = s.currency === '₩' ? '₩' : '$';
-    const priceStr = s.currency === '₩' ? `₩${Number(s.price).toLocaleString()}` : `$${s.price}`;
-    const changeClass = s.change >= 0 ? 'up' : 'down';
-    const changeSign = s.change >= 0 ? '+' : '';
-
-    html += `
-    <div class="stock-detail" style="margin-bottom:12px">
-      <div class="stock-header" style="cursor:pointer" onclick="showStockDetailModal('${s.ticker}')">
-        <div class="stock-title">
-          <h2>${s.emoji || '📊'} ${s.name}</h2>
-          <span class="ticker">${s.ticker}</span>
-          <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(96,165,250,0.1);color:var(--blue);margin-left:6px">☁️ 동기화</span>
-        </div>
-        <div class="stock-price">
-          <div class="price">${priceStr}</div>
-          ${s.change ? `<div class="pchange ${changeClass}">${changeSign}${s.change}%</div>` : ''}
-        </div>
-      </div>
-      ${s.memo ? `<div style="padding:8px 16px;font-size:12px;color:var(--text-dim)">📝 ${s.memo}</div>` : ''}
-      <div style="padding:8px 16px 12px;text-align:right">
-        <button onclick="event.stopPropagation();removeStock('${s.ticker}');renderUserWatchlist()" style="font-size:11px;padding:4px 12px;border-radius:6px;background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,0.2);cursor:pointer">삭제</button>
-      </div>
-    </div>`;
-  });
-
-  html += '</div>';
+  if (userWatchlist.length === 0) { container.innerHTML = ''; return; }
+  let html = '';
+  userWatchlist.forEach(s => { html += renderUserStockCard(s); });
   container.innerHTML = html;
 }
-
-// 포트폴리오 탭에도 동일하게 적용
-const builtInPortfolioTickers = ['TSLA','PLTR'];
 
 function renderUserPortfolio() {
   const container = document.getElementById('user-portfolio-container');
   if (!container) return;
-
   const userPortfolio = allStocks.filter(s => s.type === 'portfolio' && !builtInPortfolioTickers.includes(s.ticker));
-
-  if (userPortfolio.length === 0) {
-    container.innerHTML = '';
-    return;
-  }
-
-  let html = '<div style="margin-top:20px;padding-top:16px;border-top:2px solid rgba(239,68,68,0.15)">';
-  html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px"><span style="font-size:14px;font-weight:700;color:var(--red)">➕ 내가 추가한 주력 투자</span><span style="font-size:11px;padding:2px 8px;border-radius:10px;background:rgba(239,68,68,0.1);color:var(--red)">' + userPortfolio.length + '종목</span></div>';
-
-  userPortfolio.forEach(s => {
-    const priceStr = s.currency === '₩' ? `₩${Number(s.price).toLocaleString()}` : `$${s.price}`;
-    const changeClass = s.change >= 0 ? 'up' : 'down';
-    const changeSign = s.change >= 0 ? '+' : '';
-
-    html += `
-    <div class="stock-detail" style="margin-bottom:12px">
-      <div class="stock-header" style="cursor:pointer" onclick="showStockDetailModal('${s.ticker}')">
-        <div class="stock-title">
-          <h2>${s.emoji || '📊'} ${s.name}</h2>
-          <span class="ticker">${s.ticker}</span>
-          <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(96,165,250,0.1);color:var(--blue);margin-left:6px">☁️ 동기화</span>
-        </div>
-        <div class="stock-price">
-          <div class="price">${priceStr}</div>
-          ${s.change ? `<div class="pchange ${changeClass}">${changeSign}${s.change}%</div>` : ''}
-        </div>
-      </div>
-      ${s.memo ? `<div style="padding:8px 16px;font-size:12px;color:var(--text-dim)">📝 ${s.memo}</div>` : ''}
-      <div style="padding:8px 16px 12px;text-align:right">
-        <button onclick="event.stopPropagation();removeStock('${s.ticker}');renderUserPortfolio()" style="font-size:11px;padding:4px 12px;border-radius:6px;background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,0.2);cursor:pointer">삭제</button>
-      </div>
-    </div>`;
-  });
-
-  html += '</div>';
+  if (userPortfolio.length === 0) { container.innerHTML = ''; return; }
+  let html = '';
+  userPortfolio.forEach(s => { html += renderUserStockCard(s); });
   container.innerHTML = html;
 }
 
-// 초기 렌더링 + 추가/삭제 시 갱신
 function renderAllUserStocks() {
   renderUserWatchlist();
   renderUserPortfolio();
@@ -7512,6 +7489,35 @@ function renderInsightCards() {
   container.innerHTML = html;
 }
 renderInsightCards();
+
+// ============ 매크로 개요 — 포트폴리오 영향도 동적 렌더링 ============
+// 등록된 핵심종목 + 관심종목만 표시 (스케줄 태스크가 분석 데이터 업데이트)
+const macroImpactData = {
+  'TSLA': { emoji: '🚗', impact: '단기 수혜 가능', cls: 'good-text', desc: 'WTI $94 고유가 → 전기차 전환 가속. 단, 경기 둔화(GDP +0.7%) 시 고가 차량 수요 감소 우려.' },
+  'PLTR': { emoji: '🛡️', impact: '강한 수혜', cls: 'good-text', desc: 'US-Iran 분쟁 지속 → 국방 AI 예산 확대. Rosenblatt $200 목표가 상향이 이를 반영.' },
+  'AMZN': { emoji: '📦', impact: '부정적', cls: 'warn-text', desc: '유가 상승 → 물류비 증가. 단, Prime Video Ultra 가격 인상(4/10, $4.99)으로 ARPU 방어 가능.' },
+  'JOBY': { emoji: '🛩️', impact: '간접 수혜', cls: 'good-text', desc: '유가 급등이 전기항공 수요 촉매로 작용. FAA 인증 4단계 진행 중.' },
+  'ANET': { emoji: '🌐', impact: '구조적 수혜', cls: 'good-text', desc: 'AI 인프라 투자 지속 → 데이터센터 네트워킹 수혜. 매출 +25% 가이던스.' },
+  '267260': { emoji: '⚡', impact: '강한 수혜', cls: 'good-text', desc: 'US-Iran 긴장 + 전력 인프라 메가트렌드. 수주잔고 견조.' }
+};
+
+function renderMacroPortfolioImpact() {
+  const container = document.getElementById('macroPortfolioImpact');
+  if (!container) return;
+  const registeredTickers = allStocks.map(s => s.ticker);
+  let html = '';
+  allStocks.forEach(s => {
+    const data = macroImpactData[s.ticker];
+    if (data) {
+      html += `<div class="analysis-box"><h4>${data.emoji} ${s.name} (${s.ticker})</h4><p><span class="${data.cls}">${data.impact}</span>: ${data.desc}</p></div>`;
+    } else {
+      // 새로 추가된 종목은 기본 메시지 표시 (스케줄 태스크가 다음 업데이트 시 분석 추가)
+      html += `<div class="analysis-box"><h4>${s.emoji||'📊'} ${s.name} (${s.ticker})</h4><p>다음 정기 업데이트 시 거시경제 영향 분석이 추가됩니다.</p></div>`;
+    }
+  });
+  container.innerHTML = html;
+}
+renderMacroPortfolioImpact();
 
 function showInsightModal(id) {
   const d = insightData[id];
