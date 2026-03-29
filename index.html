@@ -6095,8 +6095,8 @@ function renderUserPortfolio() {
 function renderAllUserStocks() {
   renderUserWatchlist();
   renderUserPortfolio();
-  if (typeof filterHotIssuePortfolioImpact === 'function') filterHotIssuePortfolioImpact();
-  if (typeof renderMacroPortfolioImpact === 'function') renderMacroPortfolioImpact();
+  try { if (typeof filterHotIssuePortfolioImpact === 'function') filterHotIssuePortfolioImpact(); } catch(e) { console.warn('filterHotIssuePortfolioImpact deferred:', e.message); }
+  try { if (typeof renderMacroPortfolioImpact === 'function') renderMacroPortfolioImpact(); } catch(e) { console.warn('renderMacroPortfolioImpact deferred:', e.message); }
 }
 
 function addStock() {
