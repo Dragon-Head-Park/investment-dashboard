@@ -2620,10 +2620,8 @@
       <div style="font-size:13px;color:#c0c6d4;line-height:1.8">
         <p><strong>종목 추가:</strong> 종목명 또는 티커 중 하나만 입력해도 추가됩니다. 분류를 선택하고 '추가' 버튼을 누르세요.</p>
         <p><strong>종목 삭제:</strong> 아래 목록에서 '삭제' 버튼을 클릭하세요.</p>
-        <p><strong>임시 저장:</strong> 여기서 추가/삭제한 종목은 현재 브라우저에 임시 저장됩니다 (새로고침해도 유지).</p>
-        <p><strong>모든 기기 동기화:</strong> 모든 기기/브라우저에서 동일하게 반영하고 싶다면, Claude에게 <strong>"OO 종목 추가해줘"</strong> 또는 <strong>"OO 종목 삭제해줘"</strong>라고 요청하세요. GitHub에 저장되어 어디서든 동일하게 보입니다.</p>
-        <p><strong>저장 초기화:</strong> 브라우저 임시 저장을 초기화하려면 아래 버튼을 누르세요.</p>
-        <button onclick="if(confirm('브라우저 임시 저장을 초기화하시겠습니까?\\n(GitHub에 저장된 종목만 남습니다)')){localStorage.removeItem('userAddedStocks');localStorage.removeItem('userRemovedStocks');location.reload()}" class="btn" style="font-size:12px;padding:6px 14px;background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,0.2);border-radius:6px;cursor:pointer;margin-top:4px">🔄 브라우저 임시 저장 초기화</button>
+        <p><strong>☁️ 클라우드 동기화:</strong> 여기서 추가/삭제한 종목은 <strong>클라우드(Supabase)에 자동 저장</strong>됩니다. 어떤 기기, 어떤 브라우저에서 열어도 동일하게 보입니다.</p>
+        <p><strong>기본 종목:</strong> 주력 투자(Tesla, Palantir)와 기존 관심 종목(Amazon 등)은 대시보드에 내장되어 있습니다. 이 종목들의 영구 변경은 Claude에게 요청하세요.</p>
         <p style="margin-top:10px;padding:10px;background:rgba(96,165,250,0.08);border-radius:8px;border:1px solid rgba(96,165,250,0.15)">
           💡 <strong>팁:</strong> 거시경제 분석, 산업 동향, 기업 이슈 등 상세 분석이 필요한 종목은 Claude에게 요청하시면 실시간 데이터로 업데이트해드립니다.
         </p>
@@ -5894,70 +5892,77 @@ var stockComments = {
 };
 
 // ======= STOCK MANAGEMENT =======
-// GitHub JSON + localStorage 하이브리드 동기화
-const USER_STOCKS_URL = './user_stocks.json';
+// Supabase 실시간 동기화 (모든 기기/브라우저에서 동일)
+const SUPABASE_URL = 'https://smsubscyixcehjhpleuj.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtc3Vic2N5aXhjZWhqaHBsZXVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3MzcyMTIsImV4cCI6MjA5MDMxMzIxMn0.HN_UPMlGyei6vFumQ3HW3Xdza_bQAtP2HuQefxZZO3s';
+const SB_HEADERS = { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=representation' };
+
 let allStocks = [...portfolioStocks, ...watchlistStocks];
 
-// 1단계: localStorage에서 먼저 빠르게 로드 (오프라인 캐시)
-(function loadLocalCache() {
-  try {
-    const saved = localStorage.getItem('userAddedStocks');
-    if (saved) {
-      JSON.parse(saved).forEach(s => {
-        if (!allStocks.find(ex => ex.ticker === s.ticker)) allStocks.push(s);
-      });
-    }
-    const removed = localStorage.getItem('userRemovedStocks');
-    if (removed) {
-      const removedTickers = JSON.parse(removed);
-      allStocks = allStocks.filter(s => !removedTickers.includes(s.ticker));
-    }
-  } catch(e) {}
-})();
-
-// 2단계: GitHub JSON에서 최신 데이터 가져와서 병합 (비동기)
-(function loadGitHubStocks() {
-  fetch(USER_STOCKS_URL + '?t=' + Date.now())
-    .then(r => r.ok ? r.json() : null)
-    .then(data => {
-      if (!data) return;
+// Supabase에서 사용자 추가 종목 불러오기 (비동기)
+(function loadSupabaseStocks() {
+  fetch(SUPABASE_URL + '/rest/v1/user_stocks?select=*&order=created_at.asc', { headers: SB_HEADERS })
+    .then(r => r.ok ? r.json() : [])
+    .then(rows => {
+      if (!rows || rows.length === 0) return;
       let changed = false;
-      // 추가된 종목 반영
-      if (data.added && data.added.length > 0) {
-        data.added.forEach(s => {
-          if (!allStocks.find(ex => ex.ticker === s.ticker)) {
-            allStocks.push(s);
-            changed = true;
-          }
-        });
-      }
-      // 삭제된 종목 반영
-      if (data.removed && data.removed.length > 0) {
-        const before = allStocks.length;
-        allStocks = allStocks.filter(s => !data.removed.includes(s.ticker));
-        if (allStocks.length !== before) changed = true;
-      }
-      // localStorage 캐시도 업데이트
-      try {
-        localStorage.setItem('userAddedStocks', JSON.stringify(data.added || []));
-        localStorage.setItem('userRemovedStocks', JSON.stringify(data.removed || []));
-      } catch(e) {}
+      rows.forEach(row => {
+        if (!allStocks.find(s => s.ticker === row.ticker)) {
+          allStocks.push({
+            name: row.name, ticker: row.ticker, type: row.type,
+            price: parseFloat(row.price) || 0, change: 0, emoji: row.emoji || '📊',
+            prices: Array(10).fill(parseFloat(row.price) || 100),
+            color: '#8b92a5', memo: row.memo || '',
+            currency: row.currency || '$', _fromDB: true
+          });
+          changed = true;
+        }
+      });
       if (changed) renderStockList();
     })
-    .catch(() => { /* 네트워크 오류 시 localStorage 캐시 사용 */ });
+    .catch(() => { /* 네트워크 오류 시 기본 종목만 표시 */ });
 })();
 
-// 사용자 변경사항 저장 함수 (localStorage 캐시 저장)
-function saveUserStockChanges() {
-  try {
-    const defaultTickers = [...portfolioStocks, ...watchlistStocks].map(s => s.ticker);
-    const userAdded = allStocks.filter(s => !defaultTickers.includes(s.ticker));
-    localStorage.setItem('userAddedStocks', JSON.stringify(userAdded));
-    const currentTickers = allStocks.map(s => s.ticker);
-    const userRemoved = defaultTickers.filter(t => !currentTickers.includes(t));
-    localStorage.setItem('userRemovedStocks', JSON.stringify(userRemoved));
-  } catch(e) {}
+// Supabase에 종목 추가
+function sbInsertStock(stock) {
+  return fetch(SUPABASE_URL + '/rest/v1/user_stocks', {
+    method: 'POST', headers: SB_HEADERS,
+    body: JSON.stringify({
+      ticker: stock.ticker, name: stock.name, type: stock.type,
+      price: stock.price || 0, currency: stock.currency || '$',
+      emoji: stock.emoji || '📊', memo: stock.memo || ''
+    })
+  }).then(r => {
+    if (!r.ok) return r.json().then(e => { throw e; });
+    return r.json();
+  });
 }
+
+// Supabase에서 종목 삭제
+function sbDeleteStock(ticker) {
+  return fetch(SUPABASE_URL + '/rest/v1/user_stocks?ticker=eq.' + encodeURIComponent(ticker), {
+    method: 'DELETE', headers: SB_HEADERS
+  });
+}
+
+// 동기화 상태 표시용
+function showSyncStatus(msg, isError) {
+  let el = document.getElementById('syncStatus');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'syncStatus';
+    el.style.cssText = 'position:fixed;bottom:20px;right:20px;padding:10px 16px;border-radius:10px;font-size:12px;font-weight:600;z-index:9999;transition:opacity 0.3s;pointer-events:none';
+    document.body.appendChild(el);
+  }
+  el.style.background = isError ? 'rgba(239,68,68,0.9)' : 'rgba(34,197,94,0.9)';
+  el.style.color = '#fff';
+  el.textContent = msg;
+  el.style.opacity = '1';
+  setTimeout(() => { el.style.opacity = '0'; }, 2500);
+}
+
+// 하위 호환: saveUserStockChanges는 이제 no-op (Supabase가 대체)
+function saveUserStockChanges() { /* Supabase 동기화로 대체됨 */ }
 
 function renderStockList() {
   const el = document.getElementById('stockList');
@@ -5995,10 +6000,10 @@ function addStock() {
   const price = document.getElementById('addPrice').value.trim();
   const memo = document.getElementById('addMemo').value.trim();
 
-  // 종목명과 티커 중 하나만 입력해도 OK — 빈 쪽을 자동 보완
+  // 종목명과 티커 중 하나만 입력해도 OK
   if (!name && !ticker) { alert('종목명 또는 티커 중 하나는 입력하세요.'); return; }
-  if (!ticker) ticker = name.toUpperCase();  // 티커 없으면 종목명으로 대체
-  if (!name) name = ticker;                   // 종목명 없으면 티커로 대체
+  if (!ticker) ticker = name.toUpperCase();
+  if (!name) name = ticker;
 
   // 중복 체크
   if (allStocks.find(s => s.ticker === ticker)) {
@@ -6006,29 +6011,40 @@ function addStock() {
     return;
   }
 
-  allStocks.push({
-    name, ticker, type,
-    price: parseFloat(price.replace(/[^0-9.]/g,'')) || 0,
+  const priceNum = parseFloat(price.replace(/[^0-9.]/g,'')) || 0;
+  const newStock = {
+    name, ticker, type, price: priceNum,
     change: 0, emoji: '📊',
-    prices: Array(10).fill(parseFloat(price.replace(/[^0-9.]/g,'')) || 100),
-    color: '#8b92a5',
-    memo: memo,
-  });
+    prices: Array(10).fill(priceNum || 100),
+    color: '#8b92a5', memo: memo, currency: '$', _fromDB: true
+  };
+
+  allStocks.push(newStock);
+  renderStockList();
+
+  // Supabase에 저장 (모든 기기 동기화)
+  sbInsertStock(newStock)
+    .then(() => showSyncStatus('☁️ 동기화 완료 — 모든 기기에 반영됩니다'))
+    .catch(e => {
+      console.error('Supabase 저장 실패:', e);
+      showSyncStatus('⚠️ 동기화 실패 — 현재 브라우저에만 저장됨', true);
+    });
 
   document.getElementById('addName').value = '';
   document.getElementById('addTicker').value = '';
   document.getElementById('addPrice').value = '';
   document.getElementById('addMemo').value = '';
-  saveUserStockChanges();
-  renderStockList();
-  alert(`${name} (${ticker})이(가) ${type === 'portfolio' ? '주력 투자' : '관심 종목'}에 추가되었습니다.\n\n✅ 브라우저에 저장되어 새로고침해도 유지됩니다.`);
 }
 
 function removeStock(ticker) {
   if (confirm(`${ticker} 종목을 삭제하시겠습니까?`)) {
     allStocks = allStocks.filter(s => s.ticker !== ticker);
-    saveUserStockChanges();
     renderStockList();
+
+    // Supabase에서도 삭제 (DB에 있는 경우)
+    sbDeleteStock(ticker)
+      .then(() => showSyncStatus('☁️ 삭제 동기화 완료'))
+      .catch(() => showSyncStatus('⚠️ 동기화 실패', true));
   }
 }
 
@@ -6069,8 +6085,12 @@ function addInsightToWatchlist(insightId) {
   if (isKRW) newStock.currency = '₩';
 
   allStocks.push(newStock);
-  saveUserStockChanges();
   renderStockList();
+
+  // Supabase에 저장 (모든 기기 동기화)
+  sbInsertStock(newStock)
+    .then(() => showSyncStatus('☁️ 동기화 완료 — 모든 기기에 반영됩니다'))
+    .catch(e => console.error('Supabase 저장 실패:', e));
 
   // 버튼 상태 업데이트 (카드 + 모달)
   const cardBtn = document.getElementById('watchBtn-' + insightId);
