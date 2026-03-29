@@ -828,7 +828,7 @@
     <div class="stock-detail" id="stock-CCJ">
       <div class="stock-header">
         <div class="stock-title"><h2>☢️ Cameco</h2><span class="ticker">CCJ</span><span class="badge up">BUY</span></div>
-        <div class="stock-price"><div class="price">$109.68</div><div class="pchange up">▲ 68.3% YoY</div></div>
+        <div class="stock-price"><div class="price">$103.92</div><div class="pchange up">▲ 148.5% YoY</div></div>
       </div>
       <div class="tags">
         <span class="tag good">서방최대 우라늄생산자</span>
@@ -838,11 +838,11 @@
         <span class="tag good">Westinghouse 수직통합</span>
       </div>
       <div class="metrics-row">
-        <div class="metric"><div class="label">현재가</div><div class="val">$109.68</div></div>
-        <div class="metric"><div class="label">52주 고점</div><div class="val">$73.61</div></div>
-        <div class="metric"><div class="label">52주 저점</div><div class="val">$41.82</div></div>
-        <div class="metric"><div class="label">시가총액</div><div class="val">$51.2B</div></div>
-        <div class="metric"><div class="label">P/E</div><div class="val">42.5x</div><div class="sub">업종평균 28x</div></div>
+        <div class="metric"><div class="label">현재가</div><div class="val">$103.92</div></div>
+        <div class="metric"><div class="label">52주 고점</div><div class="val">$135.24</div></div>
+        <div class="metric"><div class="label">52주 저점</div><div class="val">$35.00</div></div>
+        <div class="metric"><div class="label">시가총액</div><div class="val">$45.2B</div></div>
+        <div class="metric"><div class="label">P/E</div><div class="val">121.9x</div><div class="sub">업종평균 28x</div></div>
       </div>
       <div class="chart-wrap">
         <canvas id="ccjChart"></canvas>
@@ -989,6 +989,7 @@
             <td class="score-cell" style="background:rgba(234,179,8,0.15);color:var(--yellow);font-size:14px;font-weight:700">5.0</td>
             <td class="score-cell" style="background:rgba(34,197,94,0.15);color:var(--green);font-size:14px;font-weight:700">8.1</td>
             <td class="score-cell" style="background:rgba(34,197,94,0.15);color:var(--green);font-size:14px;font-weight:700">7.7</td>
+            <td class="score-cell" style="background:rgba(34,197,94,0.15);color:var(--green);font-size:14px;font-weight:700">6.5</td>
             <td style="padding:10px 8px;font-size:11px;color:var(--text-muted)">8개 항목 평균</td>
           </tr>
         </tbody>
@@ -1489,6 +1490,60 @@
           <strong style="color:var(--yellow)">리스크: FAA TIA 지연 시 상업 운항 2027로 밀림 + 현금 소진 연 $5~6억 + eVTOL 40+ 경쟁사 난립(HHI 3/10).</strong>
         </div>
       </div>
+
+      <!-- Industry 5: Uranium & Nuclear Renaissance -->
+      <div style="background:rgba(34,211,238,0.03);border:1px solid rgba(34,211,238,0.1);border-radius:12px;padding:18px;margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:18px">☢️</span>
+            <strong style="font-size:14px">우라늄 채굴/원전 연료 & 원전 르네상스</strong>
+            <span class="ind-badge growth">성장 초기 (구조적 부족)</span>
+          </div>
+          <span class="pos-challenger">AI 전력수요 → 원전 폭증 → 우라늄 공급 부족</span>
+        </div>
+        <div class="ind-stats">
+          <div class="ind-stat"><div class="s-label">글로벌 우라늄 수요</div><div class="s-val">2025년 192,000톤U</div><div class="s-sub">2030 목표 225,000톤 (CAGR +3%)</div></div>
+          <div class="ind-stat"><div class="s-label">공급 부족</div><div class="s-val down">-50,000톤</div><div class="s-sub">연간 수요-공급 격차 확대</div></div>
+          <div class="ind-stat"><div class="s-label">현물가</div><div class="s-val up">$90/lbs</div><div class="s-sub">2025년 고점 이후 변동성 높음</div></div>
+          <div class="ind-stat"><div class="s-label">원전 용량</div><div class="s-val">440GW</div><div class="s-sub">2030년 500GW+ 목표</div></div>
+        </div>
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:6px;font-weight:600">주요 우라늄 생산자 (톤 기준)</div>
+        <div class="ms-bar">
+          <div style="width:24%;background:rgba(234,179,8,0.6)">Kazakhstan 24%</div>
+          <div style="width:18%;background:rgba(34,211,238,0.6)">Cameco (Canada) 18%</div>
+          <div style="width:12%;background:rgba(96,165,250,0.5)">Kazatomprom 12%</div>
+          <div style="width:10%;background:rgba(34,197,94,0.5)">Sprott (Finance) 10%</div>
+          <div style="width:26%;background:rgba(139,146,165,0.15)">기타 (China, Russia, etc) 26%</div>
+        </div>
+        <div style="margin-top:8px;font-size:12px;color:var(--text-dim);margin-bottom:6px;font-weight:600">⚔️ 원전 정책 & 시장 동향</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px">
+          <div style="background:rgba(34,211,238,0.05);border:1px solid rgba(34,211,238,0.1);border-radius:8px;padding:10px">
+            <div style="color:var(--cyan);font-weight:600;margin-bottom:4px">🇺🇸 미국 & 🇪🇺 유럽</div>
+            <div style="color:#c0c6d4;line-height:1.6">
+              <strong>미국:</strong> 신규 원전 건설 + 기존 수명 연장 정책<br>
+              <strong>유럽:</strong> 탈석탄 → 원전 회귀 가속<br>
+              <strong>AI 데이터센터:</strong> 전력수요 폭증 → 원전만 대응 가능<br>
+              <span style="color:var(--green)">Westinghouse 시너지 극대화</span>
+            </div>
+          </div>
+          <div style="background:rgba(251,146,60,0.05);border:1px solid rgba(251,146,60,0.1);border-radius:8px;padding:10px">
+            <div style="color:var(--orange);font-weight:600;margin-bottom:4px">🚀 SMR(소형모듈로) 상용화</div>
+            <div style="color:#c0c6d4;line-height:1.6">
+              <strong>NuScale (Westinghouse):</strong> 2027년 상용화 목표<br>
+              <strong>고효율 설계:</strong> 대형원전 대비 25% 더 효율적<br>
+              <strong>신규 시장:</strong> 해운/석유가스/산업용 열공급<br>
+              <span style="color:var(--green)">우라늄 수요 추가 증가</span>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:10px;font-size:12px;color:#c0c6d4;line-height:1.7">
+          <strong style="color:var(--cyan)">핵심:</strong> <span style="color:var(--green)">AI 데이터센터의 전력 초고수요 → 원전만이 유일한 솔루션</span>.
+          미국/유럽이 동시에 원전 정책 강화 → 우라늄 수요 연간 +3~5% 지속 증가.
+          현재 우라늄 공급은 연간 5만톤 부족 상태 → <span style="color:var(--green)">Cameco의 McArthur/Cigar Lake 재개(2026) 극히 중요</span>.
+          SMR 상용화는 장기 우라늄 수요 증가의 신엔진.
+          <strong style="color:var(--red)">리스크:</strong> 우라늄 현물가 급락(supply 급증), 원전 정책 변동, 카자흐스탄(Kazatomprom) 공급 확대.
+        </div>
+      </div>
     </div>
 
     <!-- ========== TECHNOLOGY COMPETITIVENESS TRACKER ========== -->
@@ -1661,6 +1716,31 @@
             <strong>Blade:</strong> NYC/LA 프리미엄 헬기 노선 인수 → <span style="color:var(--green)">Q3 $23M 매출</span>. eVTOL 전환 시 기존 인프라 즉시 활용 + 원가 -70%.
           </div>
         </div>
+
+        <!-- Cameco Tech -->
+        <div class="tech-item">
+          <h5>☢️ Cameco <span class="pos-indicator pos-leader">서방 최대 우라늄 생산자 + 원전 통합체인 (Westinghouse)</span></h5>
+          <div style="margin-bottom:6px;font-size:10px;color:var(--text-dim);font-weight:600">⛏️ 우라늄 채굴 및 가공</div>
+          <div style="margin-bottom:8px">
+            <span class="tech-tag lead">McArthur River (세계 최대 고품위)</span>
+            <span class="tech-tag lead">Cigar Lake (고품위 광산)</span>
+            <span class="tech-tag strong">ISR 기술 (원지침출)</span>
+            <span class="tech-tag strong">지하갱도 채굴</span>
+            <span class="tech-tag strong">Porter Lake 정제 시설</span>
+          </div>
+          <div style="margin-bottom:6px;font-size:10px;color:var(--cyan);font-weight:600">⚛️ Westinghouse (인수/통합)</div>
+          <div style="margin-bottom:8px">
+            <span class="tech-tag lead">원전 연료 제조 (Fuel)</span>
+            <span class="tech-tag strong">Westinghouse 원전 설계 기술</span>
+            <span class="tech-tag strong">SMR 개발 참여 (NuScale)</span>
+            <span class="tech-tag strong">원전 서비스 + 유지보수</span>
+            <span class="tech-tag develop">재처리 기술</span>
+          </div>
+          <div style="font-size:11px;color:#c0c6d4;line-height:1.6">
+            <strong>채굴:</strong> McArthur River/Cigar Lake는 <span style="color:var(--green)">세계 최대 고품위 우라늄 광산</span>. ISR 기술로 원가 경쟁력 최강. 2025년 생산 재개 예정 → <span style="color:var(--yellow)">우라늄 현물가 급등 시 매진 기회</span>.<br>
+            <strong>Westinghouse:</strong> 원전 연료 가공부터 원전 설계/설치/유지보수까지 <span style="color:var(--green)">원전 밸류체인 수직통합</span>. SMR(소형모듈로) 상용화 참여 → 미국/유럽 원전 확대 정책의 최대 수혜자.
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1789,6 +1869,16 @@
               <td class="score-cell sc-good">확대 ↑</td>
               <td style="padding:8px;font-size:11px;color:#c0c6d4">🚁 Blade 헬기 ($23M/Q)</td>
             </tr>
+            <!-- CCJ 그룹 (짝수 — 밝은 배경) -->
+            <tr style="background:rgba(96,165,250,0.04);border-top:2px solid rgba(96,165,250,0.15)">
+              <td style="padding:10px 8px;font-weight:600;border-left:3px solid var(--cyan)">☢️ CCJ<br><span style="font-size:10px;color:var(--text-dim);font-weight:400">(우라늄/원전)</span></td>
+              <td class="score-cell sc-ok">~8%</td>
+              <td class="score-cell sc-good">+24.18%</td>
+              <td class="score-cell sc-good">3.0x</td>
+              <td class="score-cell" style="background:rgba(34,197,94,0.1);color:var(--green)">성장 초기</td>
+              <td class="score-cell sc-good">확대 ↑</td>
+              <td style="padding:8px;font-size:11px;color:#c0c6d4">AI 전력수요 → 원전 확대, SMR, Westinghouse</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -1833,6 +1923,11 @@
           <div class="total-score" style="color:var(--yellow)">5.0</div>
           <div class="total-grade sc-ok">B- — 고위험/관망</div>
         </div>
+        <div style="text-align:center;padding:16px;background:rgba(34,211,238,0.05);border:1px solid rgba(34,211,238,0.15);border-radius:12px">
+          <div style="font-size:13px;color:var(--text-dim)">☢️ Cameco</div>
+          <div class="total-score" style="color:var(--yellow)">6.5</div>
+          <div class="total-grade sc-ok">B+ — 매수</div>
+        </div>
       </div>
     </div>
 
@@ -1843,12 +1938,13 @@
         <thead>
           <tr>
             <th style="padding:8px;text-align:left;color:var(--text-dim);width:16%">지표</th>
-            <th style="padding:8px;text-align:center;color:var(--red);width:14%">🚗 TSLA</th>
-            <th style="padding:8px;text-align:center;color:var(--purple);width:14%">🛡️ PLTR</th>
-            <th style="padding:8px;text-align:center;color:var(--orange);width:14%">📦 AMZN</th>
-            <th style="padding:8px;text-align:center;color:var(--cyan);width:14%">🛩️ JOBY</th>
-            <th style="padding:8px;text-align:center;color:var(--green);width:14%">🌐 ANET</th>
-            <th style="padding:8px;text-align:center;color:var(--blue);width:14%">⚡ HD현대</th>
+            <th style="padding:8px;text-align:center;color:var(--red);width:12%">🚗 TSLA</th>
+            <th style="padding:8px;text-align:center;color:var(--purple);width:12%">🛡️ PLTR</th>
+            <th style="padding:8px;text-align:center;color:var(--orange);width:12%">📦 AMZN</th>
+            <th style="padding:8px;text-align:center;color:var(--cyan);width:12%">🛩️ JOBY</th>
+            <th style="padding:8px;text-align:center;color:var(--green);width:12%">🌐 ANET</th>
+            <th style="padding:8px;text-align:center;color:var(--blue);width:12%">⚡ HD현대</th>
+            <th style="padding:8px;text-align:center;color:var(--cyan);width:12%">☢️ CCJ</th>
           </tr>
         </thead>
         <tbody>
@@ -1860,6 +1956,7 @@
             <td class="score-cell sc-bad">적자</td>
             <td class="score-cell sc-ok">50x</td>
             <td class="score-cell sc-ok">42x</td>
+            <td class="score-cell sc-bad">121.9x</td>
           </tr>
           <tr>
             <td style="padding:6px 8px;color:var(--text-dim)">Forward P/E</td>
@@ -1869,6 +1966,7 @@
             <td class="score-cell sc-bad">적자</td>
             <td class="score-cell sc-good">39x</td>
             <td class="score-cell sc-ok">35x</td>
+            <td class="score-cell sc-bad">85.0x</td>
           </tr>
           <tr>
             <td style="padding:6px 8px;color:var(--text-dim)">P/S (TTM)</td>
@@ -1878,6 +1976,7 @@
             <td class="score-cell sc-bad">178x</td>
             <td class="score-cell sc-ok">15x</td>
             <td class="score-cell sc-ok">5.8x</td>
+            <td class="score-cell sc-bad">19.27x</td>
           </tr>
           <tr>
             <td style="padding:6px 8px;color:var(--text-dim)">ROE</td>
@@ -1887,6 +1986,7 @@
             <td class="score-cell sc-bad">-53%</td>
             <td class="score-cell sc-great">31.4%</td>
             <td class="score-cell sc-good">22%</td>
+            <td class="score-cell sc-warn">8.89%</td>
           </tr>
           <tr>
             <td style="padding:6px 8px;color:var(--text-dim)">영업이익률</td>
@@ -1896,6 +1996,7 @@
             <td class="score-cell sc-bad">적자</td>
             <td class="score-cell sc-great">42%</td>
             <td class="score-cell sc-good">18.5%</td>
+            <td class="score-cell sc-good">16.67%</td>
           </tr>
           <tr>
             <td style="padding:6px 8px;color:var(--text-dim)">매출 성장률 (YoY)</td>
@@ -1905,6 +2006,7 @@
             <td class="score-cell sc-great">+39,183%</td>
             <td class="score-cell sc-good">+25%</td>
             <td class="score-cell sc-good">+28%</td>
+            <td class="score-cell sc-good">+24.18%</td>
           </tr>
           <tr>
             <td style="padding:6px 8px;color:var(--text-dim)">부채/자본</td>
@@ -1914,6 +2016,7 @@
             <td class="score-cell sc-ok">0.35</td>
             <td class="score-cell sc-great">0.02</td>
             <td class="score-cell sc-ok">0.45</td>
+            <td class="score-cell sc-great">0.15</td>
           </tr>
           <tr>
             <td style="padding:6px 8px;color:var(--text-dim)">시가총액</td>
@@ -1923,6 +2026,7 @@
             <td style="padding:6px 8px;text-align:center;color:var(--text-dim)">$9.5B</td>
             <td style="padding:6px 8px;text-align:center;color:var(--text-dim)">$87B</td>
             <td style="padding:6px 8px;text-align:center;color:var(--text-dim)">₩11.4T</td>
+            <td style="padding:6px 8px;text-align:center;color:var(--text-dim)">$45.2B</td>
           </tr>
         </tbody>
       </table>
@@ -1937,21 +2041,24 @@
           <p><strong style="color:var(--green)">AMZN 9점</strong>: AWS 1위 + 물류 네트워크 + Prime 생태계. 전환 비용 극히 높음.<br><br>
           <strong style="color:var(--green)">PLTR 9점</strong>: 정부/국방 AI 독보적. 데이터 통합 플랫폼 대체 불가. 고객 이탈률 극저.<br><br>
           <strong style="color:var(--purple)">TSLA 8점</strong>: 슈퍼차저 네트워크 + FSD 데이터 규모 1위 + 브랜드. 다만 중국 BYD 추격.<br><br>
-          <strong style="color:var(--yellow)">JOBY 5점</strong>: eVTOL 선두주자이나 FAA 인증 전. Archer·Lilium 등 경쟁사 다수.</p>
+          <strong style="color:var(--yellow)">JOBY 5점</strong>: eVTOL 선두주자이나 FAA 인증 전. Archer·Lilium 등 경쟁사 다수.<br><br>
+          <strong style="color:var(--cyan)">CCJ 8점</strong>: 서방 최대 우라늄 생산자 + Westinghouse 수직통합으로 연료 가공~원전 서비스까지 일관 체계.</p>
         </div>
         <div class="analysis-box">
           <h4>⚡ 촉매 이벤트 (Catalyst)</h4>
           <p><strong style="color:var(--green)">PLTR 9점</strong>: 중동 전쟁 → 방산AI 수요. GE계약. 미 상업부문 폭발. 매분기 서프라이즈.<br><br>
           <strong style="color:var(--purple)">TSLA 8점</strong>: 4월 Cybercab 양산. FSD 유럽 승인. BofA 업그레이드. 단 이행 여부가 관건.<br><br>
           <strong style="color:var(--purple)">ANET 8점</strong>: AI 네트워킹 $3.25B 상향. 1.6T 스위칭 출시. 하이퍼스케일러 CAPEX 확대.<br><br>
-          <strong style="color:var(--purple)">HD현대 8점</strong>: 전력 슈퍼사이클. 빅테크 수주 확정. 목표가 연이은 상향.</p>
+          <strong style="color:var(--purple)">HD현대 8점</strong>: 전력 슈퍼사이클. 빅테크 수주 확정. 목표가 연이은 상향.<br><br>
+          <strong style="color:var(--cyan)">CCJ 8점</strong>: SMR 상용화 가속, 미국/유럽 원전 확대 정책, Westinghouse 시너지 본격화.</p>
         </div>
         <div class="analysis-box">
           <h4>⚠️ 핵심 리스크</h4>
           <p><strong style="color:var(--red)">JOBY 3점</strong>: 매출 前 기업. FAA 지연 시 자금 소진. 기술 검증 미완.<br><br>
           <strong style="color:var(--red)">TSLA 4점</strong>: P/E 335x 극고평가. 머스크 리스크(DOGE). EV 성장 둔화. 경쟁 심화.<br><br>
           <strong style="color:var(--red)">PLTR 4점</strong>: P/E 216x. AI 버블 우려 직접 대상. 정부 예산 삭감 시 타격.<br><br>
-          <strong style="color:var(--green)">AMZN 7점</strong>: 밸류에이션 합리적. 사업 다각화. 다만 유가 → 물류비, CAPEX 부담.</p>
+          <strong style="color:var(--green)">AMZN 7점</strong>: 밸류에이션 합리적. 사업 다각화. 다만 유가 → 물류비, CAPEX 부담.<br><br>
+          <strong style="color:var(--red)">CCJ 6점</strong>: 우라늄 현물가 급락 시 실적 직격탄, 카자흐스탄(Kazatomprom) 공급 확대, 원전 정책 역풍.</p>
         </div>
       </div>
     </div>
@@ -1972,6 +2079,7 @@
           <div style="font-size:13px;font-weight:700;color:var(--yellow);margin-bottom:8px">⚠️ 주의 관찰 종목</div>
           <div style="font-size:12px;color:#c0c6d4;line-height:1.7">
             <strong>TSLA (6.0)</strong> — 촉매(Cybercab)는 강하나 밸류에이션·CEO 이행률이 발목. 4월 양산 확인 후 판단 권장.<br>
+            <strong>CCJ (6.5)</strong> — 원전 르네상스 수혜 + 구조적 우라늄 부족이 장기 강재. 다만 현물가 변동성 높음. 포지션 진입 후 우라늄 현물가 35-40 달러 수준에서 매수 추천.<br>
             <strong>JOBY (5.0)</strong> — 미래 잠재력 높으나 현재는 매출 前 기업. 고위험-고수익. 소액 분산 투자 적합. FAA 인증 진전이 핵심.
           </div>
         </div>
@@ -2012,7 +2120,7 @@
                 <div style="font-size:11px">"ANET(PEG 1.5x)과 HD현대일렉은 '이해할 수 있는 성장주'. PLTR(PEG 4.2x)은 기대치가 너무 높음. JOBY는 매출 전 단계라 투자 부적합."</div>
               </div>
             </div>
-            <p><strong>종합</strong>: 주력 포트폴리오 중 <span style="color:var(--green)">AMZN, ANET, HD현대일렉</span>은 전문가 다수 의견 일치로 '매수/보유' 적합. <span style="color:var(--yellow)">TSLA, PLTR</span>은 밸류에이션 부담으로 '보유/비중관리'. <span style="color:var(--text-dim)">JOBY</span>는 실적 확인 필요.</p>
+            <p><strong>종합</strong>: 주력 포트폴리오 중 <span style="color:var(--green)">AMZN, ANET, HD현대일렉</span>은 전문가 다수 의견 일치로 '매수/보유' 적합. <span style="color:var(--yellow)">TSLA, PLTR</span>은 밸류에이션 부담으로 '보유/비중관리'. <span style="color:var(--cyan)">CCJ</span>는 원전 르네상스 테마로 장기 우라늄 수요 기대, 다만 현물가 변동성 리스크. <span style="color:var(--text-dim)">JOBY</span>는 실적 확인 필요.</p>
           </div>
         </div>
 
@@ -2027,6 +2135,7 @@
               <span style="padding:4px 8px;border-radius:6px;background:rgba(34,197,94,0.08);color:var(--green);font-size:11px">JOBY ✅</span>
               <span style="padding:4px 8px;border-radius:6px;background:rgba(34,197,94,0.08);color:var(--green);font-size:11px">ANET ✅</span>
               <span style="padding:4px 8px;border-radius:6px;background:rgba(34,197,94,0.08);color:var(--green);font-size:11px">HD현대일렉 ✅</span>
+              <span style="padding:4px 8px;border-radius:6px;background:rgba(34,211,238,0.08);color:var(--cyan);font-size:11px">CCJ ✅</span>
             </div>
             <div style="margin-top:6px;font-size:11px">전체 신뢰도 <span style="color:var(--green);font-weight:700">96%</span> — 정량 지표 모두 공식 소스 일치. 정성 점수는 AI 주관적 평가.</div>
           </div>
