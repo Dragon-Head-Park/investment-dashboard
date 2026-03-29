@@ -2620,8 +2620,10 @@
       <div style="font-size:13px;color:#c0c6d4;line-height:1.8">
         <p><strong>종목 추가:</strong> 종목명 또는 티커 중 하나만 입력해도 추가됩니다. 분류를 선택하고 '추가' 버튼을 누르세요.</p>
         <p><strong>종목 삭제:</strong> 아래 목록에서 '삭제' 버튼을 클릭하세요.</p>
-        <p><strong>데이터 저장:</strong> 추가/삭제한 종목은 브라우저를 닫아도 이 HTML 파일의 코드에 직접 기록되지는 않지만, 세션 중에는 유지됩니다.</p>
-        <p><strong>영구 저장:</strong> 종목을 영구적으로 추가하고 싶다면, Claude에게 "OO 종목 추가해줘"라고 요청하시면 대시보드 파일을 직접 업데이트해드립니다.</p>
+        <p><strong>데이터 저장:</strong> 추가/삭제한 종목은 브라우저의 localStorage에 자동 저장됩니다. 새로고침하거나 브라우저를 닫아도 유지됩니다.</p>
+        <p><strong>대시보드 영구 반영:</strong> 종목을 대시보드 HTML 파일 자체에 영구적으로 추가하고 싶다면, Claude에게 "OO 종목 추가해줘"라고 요청하시면 됩니다.</p>
+        <p><strong>저장 초기화:</strong> 브라우저에 저장된 종목 변경사항을 초기화하려면 아래 버튼을 누르세요.</p>
+        <button onclick="if(confirm('저장된 종목 변경사항을 모두 초기화하시겠습니까?\\n(기본 종목만 남습니다)')){localStorage.removeItem('userAddedStocks');localStorage.removeItem('userRemovedStocks');location.reload()}" class="btn" style="font-size:12px;padding:6px 14px;background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,0.2);border-radius:6px;cursor:pointer;margin-top:4px">🔄 종목 변경사항 초기화</button>
         <p style="margin-top:10px;padding:10px;background:rgba(96,165,250,0.08);border-radius:8px;border:1px solid rgba(96,165,250,0.15)">
           💡 <strong>팁:</strong> 거시경제 분석, 산업 동향, 기업 이슈 등 상세 분석이 필요한 종목은 Claude에게 요청하시면 실시간 데이터로 업데이트해드립니다.
         </p>
@@ -5892,7 +5894,43 @@ var stockComments = {
 };
 
 // ======= STOCK MANAGEMENT =======
+// localStorage에서 사용자 추가 종목 불러오기
 let allStocks = [...portfolioStocks, ...watchlistStocks];
+(function loadUserStocks() {
+  try {
+    const saved = localStorage.getItem('userAddedStocks');
+    if (saved) {
+      const userStocks = JSON.parse(saved);
+      userStocks.forEach(s => {
+        // 이미 기본 종목에 있으면 스킵
+        if (!allStocks.find(ex => ex.ticker === s.ticker)) {
+          allStocks.push(s);
+        }
+      });
+    }
+    // 삭제된 종목 반영
+    const removed = localStorage.getItem('userRemovedStocks');
+    if (removed) {
+      const removedTickers = JSON.parse(removed);
+      allStocks = allStocks.filter(s => !removedTickers.includes(s.ticker));
+    }
+  } catch(e) { /* localStorage 사용 불가 시 무시 */ }
+})();
+
+// 사용자 변경사항 저장 함수
+function saveUserStockChanges() {
+  try {
+    // 기본 종목 티커 목록
+    const defaultTickers = [...portfolioStocks, ...watchlistStocks].map(s => s.ticker);
+    // 사용자가 추가한 종목 (기본에 없는 것)
+    const userAdded = allStocks.filter(s => !defaultTickers.includes(s.ticker));
+    localStorage.setItem('userAddedStocks', JSON.stringify(userAdded));
+    // 사용자가 삭제한 종목 (기본에 있었는데 현재 없는 것)
+    const currentTickers = allStocks.map(s => s.ticker);
+    const userRemoved = defaultTickers.filter(t => !currentTickers.includes(t));
+    localStorage.setItem('userRemovedStocks', JSON.stringify(userRemoved));
+  } catch(e) { /* localStorage 사용 불가 시 무시 */ }
+}
 
 function renderStockList() {
   const el = document.getElementById('stockList');
@@ -5954,13 +5992,15 @@ function addStock() {
   document.getElementById('addTicker').value = '';
   document.getElementById('addPrice').value = '';
   document.getElementById('addMemo').value = '';
+  saveUserStockChanges();
   renderStockList();
-  alert(`${name} (${ticker})이(가) ${type === 'portfolio' ? '주력 투자' : '관심 종목'}에 추가되었습니다.`);
+  alert(`${name} (${ticker})이(가) ${type === 'portfolio' ? '주력 투자' : '관심 종목'}에 추가되었습니다.\n\n✅ 브라우저에 저장되어 새로고침해도 유지됩니다.`);
 }
 
 function removeStock(ticker) {
   if (confirm(`${ticker} 종목을 삭제하시겠습니까?`)) {
     allStocks = allStocks.filter(s => s.ticker !== ticker);
+    saveUserStockChanges();
     renderStockList();
   }
 }
@@ -6002,6 +6042,7 @@ function addInsightToWatchlist(insightId) {
   if (isKRW) newStock.currency = '₩';
 
   allStocks.push(newStock);
+  saveUserStockChanges();
   renderStockList();
 
   // 버튼 상태 업데이트 (카드 + 모달)
@@ -6022,7 +6063,7 @@ function addInsightToWatchlist(insightId) {
     modalBtn.disabled = true;
   }
 
-  alert(`✅ ${stockName} (${stockTicker})이(가) 관심 종목에 추가되었습니다!\n\n※ 세션 중에만 유지됩니다. 영구 추가는 Claude에게 요청하세요.`);
+  alert(`✅ ${stockName} (${stockTicker})이(가) 관심 종목에 추가되었습니다!\n\n✅ 브라우저에 저장되어 새로고침해도 유지됩니다.`);
 }
 
 renderStockList();
