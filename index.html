@@ -434,7 +434,7 @@
 
   <!-- ============ OVERVIEW TAB ============ -->
   <div id="tab-overview" class="tab-content active">
-    <div class="section-ts"><span class="ts-dot"></span> 시장지수·포트폴리오: <span id="ts-overview">2026.04.09 (목) 자동 업데이트 (4/8 US 장마감 — 미·이란 2주 휴전 랠리 반영)</span> | 이벤트 타임라인: <span id="ts-timeline">2026.04.09 (목) 자동 업데이트 (4/8 US 장마감 반영)</span></div>
+    <div class="section-ts"><span class="ts-dot"></span> 시장지수·포트폴리오: <span id="ts-overview">2026.04.09 (목) 자동 업데이트 (4/9 KR 장마감 — KOSPI 5,891, 휴전 랠리 2일째)</span> | 이벤트 타임라인: <span id="ts-timeline">2026.04.09 (목) 자동 업데이트 (4/9 KR 장마감 반영)</span></div>
     <!-- Market indices -->
     <div class="grid-6" id="indexCards">
       <!-- Filled by JS -->
@@ -650,7 +650,7 @@
 
   <!-- ============ STOCKS TAB (개별종목) ============ -->
   <div id="tab-stocks" class="tab-content">
-    <div class="section-ts"><span class="ts-dot"></span> 종목 데이터: <span id="ts-stocks">2026.04.09 (목) 자동 업데이트 (4/8 US 장마감 반영)</span> | 정량·정성 분석: <span id="ts-analysis">2026.04.09 (목) 자동 업데이트</span> | CEO 트래커: <span id="ts-ceotracker">2026.04.09 (목) 자동 업데이트 (4/8 US 장마감 반영)</span></div>
+    <div class="section-ts"><span class="ts-dot"></span> 종목 데이터: <span id="ts-stocks">2026.04.09 (목) 자동 업데이트 (4/9 KR 장마감 반영)</span> | 정량·정성 분석: <span id="ts-analysis">2026.04.09 (목) 자동 업데이트</span> | CEO 트래커: <span id="ts-ceotracker">2026.04.09 (목) 자동 업데이트 (4/9 KR 장마감 반영)</span></div>
     <div class="sub-tab-nav">
       <button class="sub-tab-btn active" onclick="switchSubTab('portfolio')">💼 내 포트폴리오</button>
       <button class="sub-tab-btn" onclick="switchSubTab('watchlist')">👁️ 관심 종목</button>
@@ -3478,7 +3478,7 @@
 
   <!-- ============ MACRO TAB ============ -->
   <div id="tab-macro" class="tab-content">
-    <div class="section-ts"><span class="ts-dot"></span> 거시경제: <span id="ts-macro">2026.04.09 (목) 자동 업데이트 (4/8 US 장마감 — 유가 급락, VIX 21.04)</span> | 경제지표: <span id="ts-indicators">2026.04.09</span></div>
+    <div class="section-ts"><span class="ts-dot"></span> 거시경제: <span id="ts-macro">2026.04.09 (목) 자동 업데이트 (4/9 KR 장마감 — 환율 1,470원, 10Y 3.76%)</span> | 경제지표: <span id="ts-indicators">2026.04.09</span></div>
     <!-- 거시경제 서브탭 네비게이션 -->
     <div class="sub-tab-nav">
       <button class="sub-tab-btn active" onclick="switchMacroSub('macroOverview')">📊 매크로 개요</button>
@@ -3491,7 +3491,7 @@
     <div id="msub-macroOverview" class="macro-sub active">
     <div class="macro-card">
       <h3>🌍 거시경제 리스크 대시보드</h3>
-      <p style="font-size:13px;color:var(--text-dim);margin-bottom:16px">2026년 4월 8일 현재 — 🕊️ 미·이란 2주 휴전 합의로 리스크 대폭 하향!</p>
+      <p style="font-size:13px;color:var(--text-dim);margin-bottom:16px">2026년 4월 9일 현재 — 🕊️ 미·이란 휴전 2일째, 유가 $96 안정 | 원/달러 1,470원 | 4/10 한은 금리결정</p>
       <div class="risk-meter">
         <div class="risk-label" style="color:var(--yellow)">🛢️ 유가 위기</div>
         <div class="risk-bar"><div class="risk-fill" style="width:55%;background:linear-gradient(90deg,var(--green),var(--yellow))"></div></div>
@@ -3536,8 +3536,8 @@
       <div class="macro-card">
         <h3>📊 주요 거시 지표</h3>
         <div class="metrics-row" style="flex-direction:column;gap:8px">
-          <div class="metric"><div class="label">WTI 원유</div><div class="val" style="color:var(--red)">$101.00 / 배럴</div><div class="sub">이란 휴전 기대감에 $104→$101 하락(-3.7%). 트럼프, 전쟁 종식 의향 보도. 여전히 $100+ 고수준 유지</div></div>
-          <div class="metric"><div class="label">브렌트유</div><div class="val" style="color:var(--red)">$110.69 / 배럴</div><div class="sub">3월 한달 +50% 급등. 이란 대통령 종전 의지 보도에 고점 대비 소폭 하락</div></div>
+          <div class="metric"><div class="label">WTI 원유</div><div class="val" style="color:var(--yellow)">$96.49 / 배럴</div><div class="sub">미·이란 2주 휴전 합의로 고점 $112→$96 급락(-14.6%). 4/11 이슬라마바드 본격 협상 주목</div></div>
+          <div class="metric"><div class="label">브렌트유</div><div class="val" style="color:var(--yellow)">$96.39 / 배럴</div><div class="sub">휴전 합의로 $124→$96 급락(-11.8%). 호르무즈 해협 2주 안전 통행 보장</div></div>
           <div class="metric"><div class="label">미국 Q4 GDP</div><div class="val" style="color:var(--red)">+0.7%</div><div class="sub">예상 1.5% 크게 하회</div></div>
           <div class="metric"><div class="label">미국 인플레이션 전망</div><div class="val" style="color:var(--yellow)">+0.7pp 상승</div><div class="sub">1년 지속 시나리오</div></div>
           <div class="metric"><div class="label">미국 휘발유</div><div class="val" style="color:var(--red)">$3.54 / 갤런</div><div class="sub">전월 대비 +21%</div></div>
@@ -4505,7 +4505,7 @@
           <p style="font-size:12px;color:var(--text-dim);margin-top:4px">개별종목 펀더멘털 + 거시경제 변수 + 산업 사이클을 종합 분석하여 투자 기회를 분류합니다</p>
         </div>
         <div style="font-size:11px;color:var(--text-dim);text-align:right">
-          <div class="section-ts"><span class="ts-dot"></span> KR 종가: <strong style="color:var(--blue)" id="ts-insight-kr">2026.04.08 15:30 (4/8 KR 장마감 반영 — 미·이란 휴전 급등)</strong></div>
+          <div class="section-ts"><span class="ts-dot"></span> KR 종가: <strong style="color:var(--blue)" id="ts-insight-kr">2026.04.09 15:30 (4/9 KR 장마감 반영 — 휴전 랠리 지속, 삼성전자 차익실현)</strong></div>
           <div class="section-ts" style="margin-top:2px"><span class="ts-dot"></span> US 종가: <strong style="color:var(--blue)" id="ts-insight-us">2026.04.09 (목) 자동 업데이트 (4/8 US 장마감 — 미·이란 2주 휴전 랠리)</strong></div>
           <div class="section-ts" style="margin-top:2px"><span class="ts-dot"></span> 카드 추천: <span id="ts-insight-rec" style="color:var(--blue)">2026.04.05 (Liberation Day 1주년 + Q1 실적 시즌 전면 갱신)</span></div>
         </div>
@@ -4542,7 +4542,7 @@
 
   <!-- ============ HOT ISSUE TAB ============ -->
   <div id="tab-hotissue" class="tab-content">
-    <div class="section-ts"><span class="ts-dot"></span> 핫이슈: <span id="ts-hotissue">2026.04.09 (목) 자동 업데이트 (4/8 US 장마감 — 미·이란 휴전 랠리, 유가 급락)</span></div>
+    <div class="section-ts"><span class="ts-dot"></span> 핫이슈: <span id="ts-hotissue">2026.04.09 (목) 자동 업데이트 (4/9 KR 장마감 — 휴전 랠리 2일째, 4/10 한은 금리결정 D-1)</span></div>
 
     <!-- Issue Heatmap -->
     <div class="card" style="margin-bottom:16px">
@@ -4590,6 +4590,7 @@
             <div class="tl-item"><div class="tl-date">4/3</div><div class="tl-text"><strong>굿프라이데이 — 미국 시장 휴장</strong> — NYSE·NASDAQ 전일 휴장. 4/7 첫 거래일에 글로벌 관세 반응 본격 반영 예정. 주말 동안 중국·EU 보복 관세 발표 가능성 주시.</div></div>
             <div class="tl-item"><div class="tl-date">4/7</div><div class="tl-text"><strong>미국 시장 재개 — 관세 쇼크 제한적 반영</strong> — 이란 휴전 기대에 유가 급락(-15%) + 관세 불확실성 혼재. S&P +0.08% 소폭 상승, Dow -0.18% 약세. 관세 이슈보다 이란 데드라인(4/8)이 시장 주도. Section 232 철강·알루미늄·구리 관세 4/6 발효 확인.</div></div>
             <div class="tl-item good"><div class="tl-date">4/8</div><div class="tl-text"><strong>🕊️ 미·이란 2주 휴전 합의!</strong> — 트럼프 "이란이 호르무즈 해협 안전 개방 조건으로 2주간 공습 중단 동의." 이란도 수락. 호르무즈 해협 2주간 안전 통행 보장. WTI -14.8%($96.20) 급락. KOSPI +6.89% 폭등, 매수 사이드카 발동. 4/11 이슬라마바드에서 이란-미국 본격 협상 시작. ⏳ 4/22 휴전 만료 — 연장 vs 재확전이 핵심 변수.</div></div>
+            <div class="tl-item good"><div class="tl-date">4/9</div><div class="tl-text"><strong>📈 휴전 랠리 2일째 — KOSPI 5,891(+0.29%), 장중 5,900 터치!</strong> — 삼성전자 ₩205,500(-2.37% 차익실현), 한화에어로 ₩1,540,000(+3.77% 미국 국방예산 증액 반등). HD현대일렉트릭 앨라배마 제2공장 기공식(4/6) 호재. 원/달러 1,470원(-0.4%). 10Y 국고채 3.76%. 4/10 한국은행 금리결정 D-1 관망 심리. 수출 +48.3% YoY, CPI 2.2% 발표.</div></div>
           </div>
         </div>
 
@@ -6049,8 +6050,8 @@ const marchDates = ['3/4','3/5','3/6','3/7','3/9','3/10','3/11','3/12','3/13','3
 
 // ======= DATA =======
 const marketData = {
-  KOSPI:  { prices: [5650,5100,5350,5500,5583,5487,5487,5550,5640,5863,5837,5809,5763,5436,5517,5642,5642,5460,5514,5206,5062,5377,5450,5495,5874], last: 5874, change: +6.89, flag: '🇰🇷' },
-  KOSDAQ: { prices: [1130,1050,1090,1120,1148,1153,1138,1153,1137,1153,1153,1146,1120,1070,1088,1095,1160,1137,1137,1093,1062,1080,1047,1037,1090], last: 1090, change: +5.12, flag: '🇰🇷' },
+  KOSPI:  { prices: [5100,5350,5500,5583,5487,5487,5550,5640,5863,5837,5809,5763,5436,5517,5642,5642,5460,5514,5206,5062,5377,5450,5495,5874,5891], last: 5891, change: +0.29, flag: '🇰🇷' },
+  KOSDAQ: { prices: [1050,1090,1120,1148,1153,1138,1153,1137,1153,1153,1146,1120,1070,1088,1095,1160,1137,1137,1093,1062,1080,1047,1037,1090,1095], last: 1095, change: +0.46, flag: '🇰🇷' },
   'S&P 500': { prices: [6730,6680,6700,6672,6640,6632,6699,6712,6716,6625,6606,6530,6506,6581,6581,6600,6600,6477,6344,6529,6575,6583,6612,6617,6783], last: 6783, change: +2.51, flag: '🇺🇸' },
   NASDAQ: { prices: [22600,22200,22400,22350,22310,22105,22374,22620,22480,22152,22091,21832,21648,21947,21947,22050,22050,21525,20795,21591,21841,21879,21996,22018,22635], last: 22635, change: +2.80, flag: '🇺🇸' },
   'Dow Jones': { prices: [47200,46900,47050,46677,46600,46558,46946,47139,46993,46225,46021,45487,45579,46208,46208,46350,46350,45960,45216,46342,46570,46505,46670,46584,47910], last: 47910, change: +2.85, flag: '🇺🇸' },
@@ -6067,7 +6068,7 @@ let watchlistStocks = [
   { name: 'Amazon', ticker: 'AMZN', type: 'watchlist', price: 221.25, change: +3.50, prices: [216,214,208,211,210,209,214,211.74,212.31,212.16,209.19,209.87,208.76,205.37,210.25,210.25,211.71,211.71,207.54,200.95,200.33,209.19,209.77,212.79,213.77,221.25], color: '#fb923c', emoji: '📦' },
   { name: 'Joby Aviation', ticker: 'JOBY', type: 'watchlist', price: 8.63, change: +2.98, prices: [10.6,10.4,9.2,9.6,9.9,10.0,9.7,9.82,9.70,9.95,9.90,9.54,9.69,9.23,9.33,9.33,9.20,8.97,8.47,7.80,7.79,8.27,8.50,8.70,8.38,8.63], color: '#22d3ee', emoji: '🛩️' },
   { name: 'Arista Networks', ticker: 'ANET', type: 'watchlist', price: 145.07, change: +8.55, prices: [142,140,132,135,138,140,139.6,135.35,133.57,135.86,134.84,136.07,136.26,131.22,135.88,135.88,124.20,135.01,122.55,116.13,116.13,122.78,126.68,126.25,133.64,145.07], color: '#34d399', emoji: '🌐' },
-  { name: 'HD현대일렉트릭', ticker: '267260', type: 'watchlist', price: 978000, change: +9.76, prices: [950,880,910,940,960,968,905,968,939.5,968,974,958,968,957,913,925,968,925,872,848,848,883,894,891,978], color: '#60a5fa', emoji: '⚡', currency: '₩' },
+  { name: 'HD현대일렉트릭', ticker: '267260', type: 'watchlist', price: 995000, change: +1.74, prices: [880,910,940,960,968,905,968,939.5,968,974,958,968,957,913,925,968,925,872,848,848,883,894,891,978,995], color: '#60a5fa', emoji: '⚡', currency: '₩' },
   { name: 'Cameco', ticker: 'CCJ', type: 'watchlist', price: 115.90, change: +5.14, prices: [56,58,55,57,60,62,59,61,63,65,64,67,69,68,70,72,71,73,72,102.84,108.79,112.57,110.48,110.23,115.90], color: '#22d3ee', emoji: '☢️' },
 ];
 
@@ -6076,11 +6077,11 @@ let watchlistStocks = [
 // lastSeen: 사용자가 마지막으로 해당 탭을 확인한 시각
 const tabUpdateState = {
   insight: {
-    lastUpdated: '2026-04-09T07:00:00',  // 마지막 데이터 업데이트 시각 (4/8 US 장마감 — 미·이란 휴전 랠리 반영)
+    lastUpdated: '2026-04-09T09:30:00',  // 마지막 데이터 업데이트 시각 (4/9 KR 장마감 반영)
     lastSeen: null                         // 사용자가 마지막 확인 시각
   },
   hotissue: {
-    lastUpdated: '2026-04-09T07:00:00',
+    lastUpdated: '2026-04-09T09:30:00',
     lastSeen: null
   }
 };
@@ -6895,7 +6896,7 @@ var stockComments = {
     investorComment: { date: '2026.04.05', action: '매수', guruEmoji: '🔍', guruName: 'Peter Lynch 스타일', guruStyle: '성장주 투자 — PEG 기반 합리적 성장 매수', analysis: 'CEO "2026 $110억(+22%)" + TAM 2배($1,050억). Q4 매출 $24.9B(+29%). AI 데이터센터 네트워킹 독점. Lynch의 "fast grower" 전형. 내부자 매도는 주의이나 성장 구조 건재.', bullCase: 'AI 네트워킹 독점. TAM 2배. 800G 업그레이드.', bearCase: '내부자 매도 $2,690만. P/E 프리미엄. Cisco 경쟁.', guruInsight: '"Lynch는 독점적 시장 지위 + 성장 기업을 사라 했다. Arista는 AI 네트워킹의 표준이다."', keyMetrics: ['2026 $110억 가이던스', 'TAM $1,050억', 'Q4 +29%', '800G 수요'] }
   },
   '267260': {
-    expertComment: { date: '2026.04.08', verdict: '매수', comment: 'HD현대일렉트릭 ₩891,000(-0.34%) — 4/7 소폭 하락. 글로벌 초고압 변압기 공급 부족 구조적 수혜 지속. 미국 철강·구리 파생제품 가격기준 25% 관세(한국 15%, 180일 유예) 발표 — 앨라배마 현지 공장으로 대응 가능. 2026 수주 목표 $42.2억(+10.5% YoY). 울산+앨라배마 공장 증설 진행. 키움 106만·한투 110만원 목표가. AI 데이터센터+전동화+ESS가 전력 인프라 수요 구조적 확대.', macro: 'KOSPI 5,494.78(+0.82%). 원/달러 1,505.53원. 미국 철강·구리 파생제품 25% 관세(한국 15%) 발표. AI 데이터센터 전력 수요 폭증 + 전동화 + ESS → 글로벌 전력 인프라 $1T+ 투자 시대. 초고압 변압기 10년+ 공급 부족 구조. 4/10 한국은행 금리결정.', catalysts: ['765kV 미국 대형 수주 추가 확대','앨라배마 제2공장 2027.4월 준공 예정','2026 수주 목표 $42.2억 달성'] },
+    expertComment: { date: '2026.04.09', verdict: '매수', comment: 'HD현대일렉트릭 ₩995,000(+1.74%) — 미·이란 휴전 랠리 2일째, 에너지 인프라주 견조. 🆕 4/6 앨라배마 제2공장 기공식(약 $2억 투자, 초고압 변압기 생산능력 50% 확대, 2027.4월 준공). 김영기 사장 참석. 준공 후 연간 ₩2,000억 매출 확대 기대. 글로벌 초고압 변압기 10년+ 공급 부족 구조적 수혜 지속. 2026 수주 목표 $42.2억(+10.5% YoY). 키움 106만·한투 110만원 목표가.', macro: 'KOSPI 5,891(+0.29%). 원/달러 1,470원. 미·이란 휴전 → 유가 $96 안정 → 에너지 인프라 투자 환경 개선. AI 데이터센터 전력 수요 폭증 + 전동화 + ESS → 글로벌 전력 인프라 $1T+ 투자 시대. 4/10 한국은행 금리결정 D-1.', catalysts: ['앨라배마 제2공장 기공(4/6) → 2027.4월 준공 시 매출 ₩2,000억 추가','765kV 미국 대형 수주 추가 확대','4/10 한국은행 금리결정 — 인하 시 증시 추가 수혜'] },
     investorComment: { date: '2026.04.05', action: '보유', guruEmoji: '🦅', guruName: 'George Soros 스타일', guruStyle: '역발상 투자 — 시장 전환점 포착', analysis: '전력 인프라 10년 메가트렌드. 765kV 미국 수주로 기술 리더십 확인. 키움 106만·한투 110만원 상향. 52주 고점 대비 조정 구간이나 가이던스 보수적 — 보유 합리적.', bullCase: '전력 인프라 메가트렌드. 765kV 수주. 울산·미국 증설.', bearCase: '52주 고점 대비 조정. 가이던스 보수적. 경쟁사 증산.', guruInsight: '"Soros는 구조적 변화에서 기회를 찾는다. 765kV 수주는 글로벌 핵심 공급자 지위 증명."', keyMetrics: ['키움 106만·한투 110만원', '수주 $42.2억 목표', '765kV 미국 수주 986억원'] }
   },
   'CCJ': {
@@ -7388,8 +7389,8 @@ const insightData = {
   },
   'samsung-pickup': {
     name: '삼성전자 (005930)', category: '줍줍대상', categoryColor: '#22c55e',
-    price: '₩210,500', change: '+7.12%', period: '4/8 장마감 (미·이란 휴전 급등)',
-    summary: '🚀 4/8 ₩210,500(+7.12%). 미·이란 2주 휴전 합의 → 코스피 +6.89% 폭등 속 삼성전자도 급등! Q1 잠정실적 영업이익 57.2조원(+755% YoY, 사상 최고) 모멘텀에 지정학 리스크 해소까지 겹쳐 강한 반등. DRAM 가격 90~95% 급등이 실적 견인. HBM4 양산 확대 + 메모리 슈퍼사이클 확인.',
+    price: '₩205,500', change: '-2.37%', period: '4/9 장마감 (휴전 후 차익실현)',
+    summary: '📉 4/9 ₩205,500(-2.37%). 4/8 미·이란 휴전 급등(+7.12%) 이후 차익실현 매물 출회. 외국인 순매도 전환. Q1 잠정실적 OP 57.2조원(+755% YoY, 사상 최고) 펀더멘털은 변화 없음. 4/10 한국은행 금리결정 앞두고 관망 심리. DRAM 가격 상승세 지속, HBM4 양산 모멘텀 건재.',
     fundamentals: [
       { label: 'Q4 매출 성장률 (YoY)', value: '+24% (₩93.8조, 사상최고)', status: 'good' },
       { label: 'HBM 매출 비중', value: '15% → 30% 확대 전망', status: 'good' },
@@ -7411,19 +7412,19 @@ const insightData = {
       note: '메모리 사이클 역사적으로 PBR 1.0x 이하는 매수 구간. 2017/2021년 업사이클 때 PBR 1.6~1.8x까지 상승. HBM 매출 비중 30% 달성 시 밸류에이션 리레이팅 가능. 애널리스트 컨센서스 평균 ₩228,500. 현재 ₩189,700 대비 상승여력 16~42%.'
     },
     expertComment: {
-      date: '2026.04.08',
+      date: '2026.04.09',
       verdict: '적극 매수',
-      comment: '삼성전자 ₩210,500(+7.12%) — 미·이란 2주 휴전 합의로 코스피 +6.89% 폭등, 삼성전자도 급등! Q1 잠정실적 OP 57.2조원(+755% YoY) 사상 최고 + 지정학 리스크 해소 더블 모멘텀. 외국인·기관 순매수 대거 유입. 35명 Strong Buy, 목표가 ₩239,873(+14% 상승여력). WTI 급락(-14.8%)으로 제조원가 부담 경감 기대.',
-      macro: 'KOSPI 5,873.64(+6.89%) 미·이란 휴전 급등! 원/달러 1,476원(-2.6%). WTI $96.20(-14.8%). 4/10 한국은행 금리결정(기준금리 2.5%) 예정. 호르무즈 해협 개방 → 유가 급락 → 인플레이션 완화 기대로 금리인하 가능성 재부각.',
-      catalysts: ['미·이란 휴전 → 지정학 리스크 해소 + 유가 급락 수혜','Q1 영업이익 57.2조원 확정 — 사상 최고 어닝 서프라이즈','Q2 DRAM 가격 +60% 추가 상승 → 실적 모멘텀 지속']
+      comment: '삼성전자 ₩205,500(-2.37%) — 4/8 미·이란 휴전 급등(+7.12%) 이후 차익실현. 외국인 순매도 전환이나, Q1 OP 57.2조원(+755% YoY) 사상 최고 펀더멘털 불변. 35명 Strong Buy, 목표가 ₩239,873(+17% 상승여력). 4/10 한국은행 금리결정 앞두고 관망. 유가 안정으로 제조원가 부담 경감 지속.',
+      macro: 'KOSPI 5,891(+0.29%) 휴전 랠리 이틀째 소폭 연장. 원/달러 1,470원(-0.4%). WTI $96 안정. 4/10 한국은행 금리결정(기준금리 2.5%) D-1. 유가 안정 → 인플레 완화 → 금리인하 기대감 유지.',
+      catalysts: ['4/10 한국은행 금리결정 — 금리인하 시 증시 추가 랠리','Q1 영업이익 57.2조원 확정 — Q2 실적 기대감 유지','Q2 DRAM 가격 +60% 추가 상승 → 실적 모멘텀 지속']
     },
     investorComment: {
-      date: '2026.04.08',
+      date: '2026.04.09',
       action: '적극 매수',
       guruEmoji: '🧓',
       guruName: 'Benjamin Graham 스타일',
       guruStyle: '가치투자 — 안전마진 중심 저평가 매수',
-      analysis: 'Q1 영업이익 57.2조원(+755% YoY) 사상 최고 확정! 컨센서스 40.5조원 41% 초과. 매출 133조원(+68.1%). DRAM 90~95% 급등 + HBM AI 수요 폭발. 35명 Strong Buy, 목표가 ₩239,873(+22%). PBR ~1.0x에서 사상 최고 실적 확인은 Graham의 안전마진 원칙에 부합하는 극단적 저평가.',
+      analysis: '₩205,500(-2.37%) 차익실현 하락은 건강한 조정. Q1 OP 57.2조원(+755% YoY) 사상 최고 확정. 매출 133조원(+68.1%). DRAM 90~95% 급등 + HBM AI 수요 폭발. 35명 Strong Buy, 목표가 ₩239,873(+17%). 차익실현 후 재진입 기회.',
       bullCase: 'Q1 OP 57.2조 사상최고 확정. Q2 DRAM +60% 추가 상승. HBM4 양산.',
       bearCase: 'SK하이닉스 HBM 선점 지속. 파운드리 적자. 관세+지정학 리스크.',
       guruInsight: '\'Graham은 PBR 1배 미만 + 사상 최고 실적의 조합은 역사적으로 최고의 매수 기회라 했다. 57.2조원은 확정이다.\'',
@@ -7784,8 +7785,8 @@ const insightData = {
   },
   'posco-dividend': {
     name: 'POSCO홀딩스 (005490)', category: '고배당 방어', categoryColor: '#60a5fa',
-    price: '₩362,500', change: '+4.92%', period: '4/8 장마감 (미·이란 휴전 급등)',
-    summary: '⚡ 4/8 ₩362,500(+4.92%). 미·이란 휴전 합의 → 코스피 +6.89% 폭등 속 POSCO도 동반 급등! WTI -14.8% 급락으로 에너지비용 절감 기대. PBR 0.39x 역대 최저 구간, 배당 3.0% 안정. 포스코퓨처엠 ₩1.01조 계약·아르헨 리튬 확대 모멘텀 변화 없음. 4/23 Q1 실적 발표 대기.',
+    price: '₩358,000', change: '-1.24%', period: '4/9 장마감 (휴전 후 차익실현)',
+    summary: '📉 4/9 ₩358,000(-1.24%). 4/8 휴전 급등(+4.92%) 이후 차익실현 소폭 하락. 유가 $96 안정으로 에너지비용 절감 기대 지속. PBR 0.39x 역대 최저 구간 유지. 배당 3.0% 안정. 4/10 한국은행 금리결정 대기. 4/23 Q1 실적 발표가 핵심 촉매.',
     fundamentals: [
       { label: '배당수익률', value: '2.8%', status: 'good' },
       { label: 'PBR', value: '0.42x', status: 'good' },
@@ -7807,11 +7808,11 @@ const insightData = {
       note: 'PBR 0.42x→0.6x 회귀 시 ₩500,000+. 아르헨티나 리튬 2026 본격 생산 + 리튬 가격 상승으로 상상인증권 목표가 ₩550,000 제시. 애널리스트 컨센서스 평균 ₩412,000. 현재 ₩337,000 대비 상승여력 22~54%.'
     },
     expertComment: {
-      date: '2026.04.08',
+      date: '2026.04.09',
       verdict: '보유',
-      comment: 'POSCO홀딩스 ₩362,500(+4.92%) — 미·이란 휴전 합의로 급등! WTI $96.20(-14.8%) 급락 → 철강 제조원가 절감 기대. PBR 0.39x 극단적 저평가 지속. 배당 3.0% 안정. 유가 급락은 에너지 비용 높은 철강업종에 직접 수혜. 4/23 Q1 실적 발표가 다음 방향 핵심 이벤트.',
-      macro: '원/달러 1,476원(-2.6%). KOSPI 5,873.64(+6.89%) 미·이란 휴전 급등! WTI $96.20(-14.8%). 호르무즈 해협 개방 → 에너지비용 절감 → 철강 마진 개선 기대. 4/10 한국은행 금리결정. 4/23 실적 발표 대기.',
-      catalysts: ['미·이란 휴전 → 유가 급락 → 철강 제조원가 절감 수혜','4/23 실적 발표 — 철강+2차전지 소재 이익 확인','아르헨티나 리튬 2026 하반기 본격 생산']
+      comment: 'POSCO홀딩스 ₩358,000(-1.24%) — 4/8 휴전 급등 이후 차익실현 소폭 하락. WTI $96 안정 유지로 에너지비용 절감 기대 지속. PBR 0.39x 극단적 저평가 불변. 4/10 한국은행 금리결정 D-1 관망. 4/23 Q1 실적 발표가 핵심 촉매.',
+      macro: '원/달러 1,470원(-0.4%). KOSPI 5,891(+0.29%) 휴전 랠리 2일째 소폭 연장. WTI $96 안정. 4/10 한국은행 금리결정(기준금리 2.5%) D-1. 유가 안정 → 에너지비용 절감 → 철강 마진 개선 기대 유지.',
+      catalysts: ['4/10 한국은행 금리결정 — 인하 시 밸류에이션 리레이팅','4/23 Q1 실적 발표 — 철강+2차전지 소재 이익 확인','아르헨티나 리튬 2026 하반기 본격 생산']
     },
     investorComment: {
       date: '2026.04.06',
@@ -8136,8 +8137,8 @@ const insightData = {
   },
   'hanwha-asymmetric': {
     name: '한화에어로스페이스 (012450)', category: '비대칭 수익 기회', categoryColor: '#22d3ee',
-    price: '₩1,484,000', change: '-3.45%', period: '4/8 장마감 (휴전 → 방산 차익실현)',
-    summary: '⚠️ 4/8 ₩1,484,000(-3.45%). 미·이란 2주 휴전 합의 → 방산주 차익실현 압력! 코스피 +6.89% 폭등에도 한화에어로는 역행 하락. 휴전 시 방산 수요 감소 우려 반영. 그러나 21명 Strong Buy 유지, 수주잔고 ₩37조+ 펀더멘털 훼손 없음. 2주 휴전 후 재협상 여부가 핵심 변수. 5/6 Q1 실적 발표 대기.',
+    price: '₩1,540,000', change: '+3.77%', period: '4/9 장마감 (미국 국방예산 증액 + 반등)',
+    summary: '🚀 4/9 ₩1,540,000(+3.77%). 미국 국방예산 증액 소식 + 외국인·기관 동반 매수로 4/8 휴전 하락분 일부 회복! 2주 임시 휴전은 종전이 아니며, 나토 3%+ 방산예산 구조적 확대 재확인. 21명 Strong Buy, 수주잔고 ₩37조+ 펀더멘털 건재. 5/6 Q1 실적 발표 대기.',
     fundamentals: [
       { label: '수주잔고', value: '₩37조+ (2025년말, 역대최고)', status: 'good' },
       { label: '매출 성장률', value: '+136.7% YoY (₩26.6조)', status: 'good' },
@@ -8159,11 +8160,11 @@ const insightData = {
       note: 'K-방산 FY2025 매출 성장률(+136.7%)은 글로벌 방산사 중 최고. 폴란드·루마니아·사우디 수주 본격 반영 중. 유럽 방산주(Rheinmetall P/E 40x+) 수준으로 리레이팅 진행 중. 애널리스트 컨센서스 평균 ₩1,558,000, 최고 ₩1,900,000. 현재 ₩1,326,000 대비 상승여력 17~43%.'
     },
     expertComment: {
-      date: '2026.04.08',
+      date: '2026.04.09',
       verdict: '매수',
-      comment: '한화에어로스페이스 ₩1,484,000(-3.45%) — 미·이란 2주 휴전 합의로 방산주 차익실현! 코스피 +6.89% 폭등에도 역행 하락. 지정학 리스크 완화 = 방산 프리미엄 축소 우려. 다만 2주 휴전은 종전이 아니며, 나토 3%+ 방산예산 구조적 확대 트렌드 불변. 수주잔고 ₩37조+ 펀더멘털 훼손 없음. 5/6 Q1 실적 발표가 다음 촉매.',
-      macro: '원/달러 1,476원(-2.6%). KOSPI 5,873.64(+6.89%) 미·이란 휴전 급등! WTI $96.20(-14.8%). 방산주에 역풍 — 휴전 = 방산 프리미엄 축소 우려. 다만 2주 임시 휴전이며 종전 아님. 나토 방산 예산 확대 트렌드 불변. 5/6 실적 발표 대기.',
-      catalysts: ['2주 휴전 후 재협상 결과 — 종전 vs 재확전이 방향 결정','5/6 Q1 실적 발표 — 수주잔고 ₩37조+ 반영 매출','폴란드 K9 추가 수주 계약(2026 상반기)']
+      comment: '한화에어로스페이스 ₩1,540,000(+3.77%) — 미국 국방예산 증액 소식에 4/8 휴전 하락분 일부 회복. 외국인·기관 동반 매수. 2주 임시 휴전은 종전이 아니며, 나토 3%+ 방산예산 구조적 확대 트렌드 재확인. 수주잔고 ₩37조+ 펀더멘털 훼손 없음. 5/6 Q1 실적 발표가 다음 촉매.',
+      macro: '원/달러 1,470원(-0.4%). KOSPI 5,891(+0.29%) 휴전 랠리 2일째. WTI $96 안정. 미 국방예산 증액 소식 → 방산주 반등. 4/10 한국은행 금리결정 D-1. 4/11 이슬라마바드 미-이란 본격 협상 주목.',
+      catalysts: ['4/11 이슬라마바드 미-이란 협상 — 종전 vs 재확전 분수령','5/6 Q1 실적 발표 — 수주잔고 ₩37조+ 반영 매출','미 국방예산 증액 → K-방산 수출 수혜 지속']
     },
     investorComment: {
       date: '2026.04.05',
@@ -8198,9 +8199,9 @@ const insightCardDisplay = {
   'samsung-pickup': {
     emoji: '💎', nameColor: 'var(--blue)', accent: '96,165,250',
     badge: '줍줍 적기', badgeColor: '#22c55e',
-    subtitle: '₩210,500 <span style="color:var(--green)">▲ +7.12% (4/8 휴전 급등)</span> 🚀 Q1 OP 57.2조 사상최고!',
-    desc: '<strong style="color:var(--green)">🕊️ 4/8:</strong> 미·이란 휴전 → ₩210,500(+7.12%) 급등! Q1 OP 57.2조원(+755% YoY, 사상최고)<br><strong style="color:var(--green)">펀더멘털:</strong> 매출 133조원(+68.1%), DRAM +90~95%, Q2 +60% 추가 상승 전망<br><strong>밸류에이션:</strong> PBR ~1.0x. <span style="color:var(--green)">상승여력 14~28%</span>',
-    tags: [{text:'미이란 휴전 수혜 🕊️',color:'var(--green)'},{text:'Q1 OP 57.2조 🚀',color:'var(--green)'},{text:'DRAM 슈퍼사이클',color:'var(--blue)'}]
+    subtitle: '₩205,500 <span style="color:var(--red)">▼ -2.37% (4/9 차익실현)</span> 🚀 Q1 OP 57.2조 사상최고!',
+    desc: '<strong style="color:var(--yellow)">📉 4/9:</strong> ₩205,500(-2.37%). 휴전 급등 후 차익실현. 펀더멘털 변화 없음<br><strong style="color:var(--green)">펀더멘털:</strong> Q1 OP 57.2조원(+755% YoY), DRAM +90~95%, Q2 +60% 추가 상승 전망<br><strong>밸류에이션:</strong> PBR ~1.0x. <span style="color:var(--green)">상승여력 17~28%</span>',
+    tags: [{text:'차익실현 조정',color:'var(--yellow)'},{text:'Q1 OP 57.2조 🚀',color:'var(--green)'},{text:'DRAM 슈퍼사이클',color:'var(--blue)'}]
   },
   'googl-pickup': {
     emoji: '🔍', nameColor: 'var(--green)', accent: '34,197,94',
@@ -8282,9 +8283,9 @@ const insightCardDisplay = {
   'posco-dividend': {
     emoji: '🏗️', nameColor: 'var(--blue)', accent: '96,165,250',
     badge: '고배당 가치', badgeColor: '#60a5fa',
-    subtitle: '₩362,500 <span style="color:var(--green)">▲ +4.92% (4/8 휴전 급등)</span> | 배당 3.0% | PBR 0.39x',
-    desc: '<strong style="color:var(--green)">🕊️ 4/8:</strong> ₩362,500(+4.92%). 미·이란 휴전 → 유가 급락 → 에너지비용 절감 수혜<br><strong style="color:var(--green)">매력:</strong> 배당 3.0%, PBR 0.39x 역대 극단적 저평가<br><strong style="color:var(--yellow)">촉매:</strong> 유가 급락 → 마진 개선 | 4/23 실적발표',
-    tags: [{text:'유가 급락 수혜 🕊️',color:'var(--green)'},{text:'PBR 0.39x',color:'var(--green)'},{text:'4/23 실적발표',color:'var(--yellow)'}]
+    subtitle: '₩358,000 <span style="color:var(--red)">▼ -1.24% (4/9 차익실현)</span> | 배당 3.0% | PBR 0.39x',
+    desc: '<strong style="color:var(--yellow)">📉 4/9:</strong> ₩358,000(-1.24%). 휴전 급등 후 차익실현. 유가 $96 안정 → 에너지비용 절감 지속<br><strong style="color:var(--green)">매력:</strong> 배당 3.0%, PBR 0.39x 역대 극단적 저평가<br><strong style="color:var(--yellow)">촉매:</strong> 4/10 금리결정 | 4/23 실적발표',
+    tags: [{text:'유가 안정 수혜',color:'var(--green)'},{text:'PBR 0.39x',color:'var(--green)'},{text:'4/23 실적발표',color:'var(--yellow)'}]
   },
   'realty-dividend': {
     emoji: '🏢', nameColor: 'var(--blue)', accent: '96,165,250',
@@ -8310,9 +8311,9 @@ const insightCardDisplay = {
   'hanwha-asymmetric': {
     emoji: '🛡️', nameColor: 'var(--cyan)', accent: '34,211,238',
     badge: '비대칭 기회', badgeColor: '#22d3ee',
-    subtitle: '₩1,484,000 <span style="color:var(--red)">▼ -3.45% (4/8 휴전 → 방산 차익실현)</span>',
-    desc: '<strong style="color:var(--red)">⚠️ 4/8:</strong> ₩1,484,000(-3.45%). 미·이란 휴전으로 방산 프리미엄 축소 → 차익실현. 코스피 +6.89% 역행<br><strong style="color:var(--green)">성장:</strong> FY2025 매출 +136.7% (₩26.6조), K9 세계 1위, 수주잔고 ₩37조+<br><strong style="color:var(--cyan)">비대칭:</strong> 2주 임시 휴전 ≠ 종전. 나토 3%+ 방산예산 구조적 확대 불변</strong>',
-    tags: [{text:'휴전 역풍 ⚠️',color:'var(--red)'},{text:'수주 ₩37조+',color:'var(--green)'},{text:'5/6 Q1 실적',color:'var(--yellow)'}]
+    subtitle: '₩1,540,000 <span style="color:var(--green)">▲ +3.77% (4/9 국방예산 증액 반등)</span>',
+    desc: '<strong style="color:var(--green)">🚀 4/9:</strong> ₩1,540,000(+3.77%). 미국 국방예산 증액 + 외국인·기관 매수로 반등<br><strong style="color:var(--green)">성장:</strong> FY2025 매출 +136.7% (₩26.6조), K9 세계 1위, 수주잔고 ₩37조+<br><strong style="color:var(--cyan)">비대칭:</strong> 2주 임시 휴전 ≠ 종전. 나토 3%+ 방산예산 구조적 확대 불변</strong>',
+    tags: [{text:'국방예산 증액 🚀',color:'var(--green)'},{text:'수주 ₩37조+',color:'var(--green)'},{text:'5/6 Q1 실적',color:'var(--yellow)'}]
   },
   'pltr-asymmetric': {
     emoji: '🤖', nameColor: 'var(--cyan)', accent: '34,211,238',
