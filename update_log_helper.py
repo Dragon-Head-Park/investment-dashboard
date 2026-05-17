@@ -1,158 +1,144 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-업데이트 로그 헬퍼 — 스케줄 태스크에서 대시보드 HTML의 __updateLog에 기록을 추가합니다.
+업데이트 로그 헬퍼 (v2 — JSON 기반)
 
-사용법:
-    from update_log_helper import add_update_log
-
-    add_update_log(
-        html_path="주식시장_대시보드.html",
-        task_id="kr-market-dashboard-update",
-        updates=[
-            {
-                "tab": "stocks",
-                "sectionId": "sub-portfolio",  # HTML id (선택)
-                "label": "내 포트폴리오",
-                "items": ["TSLA $248.50 (+2.3%)", "PLTR $89.20 (-1.1%)"]
-            },
-            {
-                "tab": "stocks",
-                "sectionId": "sub-watchlist",
-                "label": "관심종목",
-                "items": ["AMZN $198.30 (+0.5%)"]
-            }
-        ]
-    )
-
-각 필드 설명:
-    task_id   : 스케줄 태스크 ID (예: "kr-market-dashboard-update")
-    updates   : 업데이트된 섹션 목록
-      - tab       : 탭 ID ("overview", "stocks", "macro", "insight", "hotissue", "sources")
-      - sectionId : HTML 요소 ID (예: "sub-portfolio", "sub-ceotracker") — 섹션 제목에 뱃지 표시
-      - label     : 섹션 한글 이름 (예: "내 포트폴리오")
-      - items     : 업데이트된 아코디언 항목 목록 (헤더 텍스트에서 매칭하여 뱃지 표시)
-                    예: ["HD현대일렉트릭 ₩458,000", "Elon Musk 38%"]
+v1: HTML 본문 정규식 치환 → truncation 사고 빈발
+v2: data/update_log.json 만 read/write, HTML 본문 절대 미수정
 """
 
 import json
-import re
+import os
+import sys
 from datetime import datetime
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+DATA_DIR = ROOT / "data"
+JSON_PATH = DATA_DIR / "update_log.json"
+JS_PATH = DATA_DIR / "update_log.js"
+
+JS_HEADER = (
+    "// auto-generated from data/update_log.json - 직접 편집 금지\n"
+    "// HTML <script src> 로 로드되어 window.__updateLog 에 주입됨\n"
+)
 
 
-def add_update_log(html_path: str, task_id: str, updates: list, max_entries: int = 50):
-    """
-    대시보드 HTML의 __updateLog 배열에 새 기록을 추가합니다.
-
-    Args:
-        html_path: 대시보드 HTML 파일 경로
-        task_id: 스케줄 태스크 ID
-        updates: 업데이트 섹션 목록 (위 docstring 참조)
-        max_entries: 최대 보관 기록 수 (기본 50, 초과 시 오래된 것 삭제)
-    """
-    with open(html_path, 'r', encoding='utf-8') as f:
-        content = f.read()
-
-    # 현재 __updateLog 배열 찾기
-    pattern = r'var __updateLog\s*=\s*(\[[\s\S]*?\]);'
-    match = re.search(pattern, content)
-
-    if not match:
-        print(f"⚠️ __updateLog 변수를 찾을 수 없습니다: {html_path}")
-        return False
-
+def _load_log():
+    if not JSON_PATH.exists():
+        return []
     try:
-        current_log = json.loads(match.group(1))
-    except json.JSONDecodeError:
-        current_log = []
+        with JSON_PATH.open("r", encoding="utf-8") as f:
+            data = json.load(f)
+        if not isinstance(data, list):
+            return []
+        return data
+    except json.JSONDecodeError as e:
+        bak = JSON_PATH.with_suffix(".json.broken")
+        JSON_PATH.replace(bak)
+        print("[ERROR] update_log.json 파싱 실패 - %s (%s)" % (bak.name, e))
+        return []
 
-    # 새 엔트리 생성
+
+def _atomic_write(path, text):
+    DATA_DIR.mkdir(exist_ok=True)
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    with tmp.open("w", encoding="utf-8") as f:
+        f.write(text)
+        f.flush()
+        try:
+            os.fsync(f.fileno())
+        except OSError:
+            pass
+    tmp.replace(path)
+
+
+def _save_log(log_list):
+    json_text = json.dumps(log_list, ensure_ascii=False, indent=2)
+    _atomic_write(JSON_PATH, json_text)
+    compact = json.dumps(log_list, ensure_ascii=False, separators=(",", ":"))
+    _atomic_write(JS_PATH, JS_HEADER + "window.__updateLog = " + compact + ";\n")
+
+
+def add_update_log(*args, **kwargs):
+    """
+    엔트리 추가 (v1 호환).
+      add_update_log(task_id=..., updates=[...])
+      add_update_log(html_path=..., task_id=..., updates=[...])
+      add_update_log(html_path, task_id, updates)
+    """
+    if "task_id" in kwargs and "updates" in kwargs:
+        task_id = kwargs["task_id"]
+        updates = kwargs["updates"]
+        max_entries = kwargs.get("max_entries", 50)
+    else:
+        if len(args) == 3:
+            _, task_id, updates = args
+        elif len(args) == 2:
+            task_id, updates = args
+        else:
+            raise TypeError("task_id 와 updates 인자가 필요합니다")
+        max_entries = kwargs.get("max_entries", 50)
+
+    if not isinstance(updates, list):
+        raise TypeError("updates 는 list 여야 함")
+    for u in updates:
+        if not isinstance(u, dict):
+            raise TypeError("각 update 는 dict 여야 함")
+        if "tab" not in u or "label" not in u or "items" not in u:
+            raise ValueError("update 에 tab/label/items 필수")
+
+    current = _load_log()
     new_entry = {
         "taskId": task_id,
         "time": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
-        "updates": updates
+        "updates": updates,
     }
+    current.append(new_entry)
+    if len(current) > max_entries:
+        current = current[-max_entries:]
 
-    # 추가 및 오래된 기록 정리
-    current_log.append(new_entry)
-    if len(current_log) > max_entries:
-        current_log = current_log[-max_entries:]
+    _save_log(current)
 
-    # JSON 직렬화 (한글 유지, 컴팩트)
-    new_json = json.dumps(current_log, ensure_ascii=False, separators=(',', ':'))
-
-    # HTML에 반영
-    new_var = f'var __updateLog = {new_json};'
-    content = re.sub(pattern, new_var, content)
-
-    with open(html_path, 'w', encoding='utf-8') as f:
-        f.write(content)
-
-    # 요약 출력
-    total_items = sum(len(u.get('items', [])) for u in updates)
-    print(f"✅ 업데이트 로그 기록 완료:")
-    print(f"   태스크: {task_id}")
-    print(f"   시간: {new_entry['time']}")
-    print(f"   섹션: {len(updates)}개, 항목: {total_items}개")
+    total_items = sum(len(u.get("items", [])) for u in updates)
+    print("[OK] update_log 기록 완료")
+    print("     task: " + task_id)
+    print("     time: " + new_entry["time"])
+    print("     섹션: %d개, 항목: %d개" % (len(updates), total_items))
     for u in updates:
-        items_preview = ', '.join(u.get('items', [])[:3])
-        if len(u.get('items', [])) > 3:
-            items_preview += f" ... (+{len(u['items'])-3}개)"
-        print(f"   📌 {u.get('label', '?')}: {items_preview}")
-
+        items = u.get("items", [])
+        preview = ", ".join(items[:3])
+        if len(items) > 3:
+            preview += " ... (+%d개)" % (len(items) - 3)
+        print("     - %s: %s" % (u.get("label", "?"), preview))
     return True
 
 
-# 편의 함수: 자주 쓰이는 패턴
 def log_stock_price_update(html_path, task_id, tab, section_id, section_label, stock_updates):
-    """
-    주가 업데이트 기록 편의 함수
-
-    stock_updates: [("TSLA", "$248.50", "+2.3%"), ("PLTR", "$89.20", "-1.1%")]
-    """
-    items = [f"{name} {price} ({change})" for name, price, change in stock_updates]
-    return add_update_log(html_path, task_id, [{
+    items = [n + " " + p + " (" + c + ")" for n, p, c in stock_updates]
+    return add_update_log(task_id=task_id, updates=[{
         "tab": tab,
         "sectionId": section_id,
         "label": section_label,
-        "items": items
+        "items": items,
     }])
 
 
 def log_multi_section_update(html_path, task_id, sections):
-    """
-    여러 섹션 한번에 기록
-
-    sections: [
-        ("macro", "bond-section", "채권/금리", ["미국 10년물 4.28%", "한국 3년물 2.85%"]),
-        ("macro", "commodity-section", "원자재", ["WTI $67.2", "금 $2,985"]),
-    ]
-    """
     updates = [{
-        "tab": tab,
-        "sectionId": sec_id,
-        "label": label,
-        "items": items
-    } for tab, sec_id, label, items in sections]
-    return add_update_log(html_path, task_id, updates)
+        "tab": tab, "sectionId": sid, "label": lbl, "items": items
+    } for tab, sid, lbl, items in sections]
+    return add_update_log(task_id=task_id, updates=updates)
 
 
 if __name__ == "__main__":
-    # 테스트용 — 직접 실행 시 샘플 데이터 추가
-    import sys
     if len(sys.argv) > 1 and sys.argv[1] == "--test":
-        html = sys.argv[2] if len(sys.argv) > 2 else "주식시장_대시보드.html"
-        add_update_log(html, "kr-market-dashboard-update", [
-            {
-                "tab": "stocks",
-                "sectionId": "sub-portfolio",
-                "label": "내 포트폴리오",
-                "items": ["TSLA $248.50 (+2.3%)", "PLTR $89.20 (-1.1%)", "HD현대일렉트릭 ₩458,000 (+1.8%)"]
-            },
-            {
-                "tab": "stocks",
-                "sectionId": "sub-watchlist",
-                "label": "관심종목",
-                "items": ["AMZN $198.30 (+0.5%)", "JOBY $7.85 (-2.1%)"]
-            }
-        ])
-        print("\n테스트 데이터가 추가되었습니다.")
+        add_update_log(task_id="test-task", updates=[{
+            "tab": "stocks",
+            "sectionId": "sub-portfolio",
+            "label": "테스트 섹션",
+            "items": ["TEST $1.00 (+0.0%)"],
+        }])
+        print("\n테스트 entry 추가됨.")
+        log = _load_log()
+        print(json.dumps(log[-1], ensure_ascii=False, indent=2))
